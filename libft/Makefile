@@ -1,6 +1,9 @@
 # Compiler and Flags
 CC = cc
+# Library name
+NAME = libft.a
 CFLAGS = -Wall -Wextra -Werror
+INCLUDES = -I$(HEADERSDIR)
 
 # MANDATORY files
 MANDATORY_SRCS = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c ft_itoa.c \
@@ -19,14 +22,8 @@ OBJSDIR = objs
 
 SRCSM = $(addprefix $(SRCSDIR)/, $(MANDATORY_SRCS))
 SRCSB = $(addprefix $(SRCSDIR)/, $(BONUS_SRCS))
-OBJSM = $(addprefix $(OBJSDIR)/, $(SRCSM:.c=.o))
-OBJSB = $(addprefix $(OBJSDIR)/, $(SRCSB:.c=.o))
-
-$(OBJSDIR):
-	mkdir -p $(OBJSDIR)
-
-# Library name
-NAME = libft.a
+OBJSM = $(addprefix $(OBJSDIR)/, $(MANDATORY_SRCS:.c=.o))
+OBJSB = $(addprefix $(OBJSDIR)/, $(BONUS_SRCS:.c=.o))
 
 # Default
 all: $(NAME)
@@ -37,11 +34,14 @@ $(NAME): $(OBJSM) $(OBJSDIR)
 
 # Rule to compile .c files to .o files
 $(OBJSDIR)/%.o: $(SRCSDIR)/%.c | $(OBJSDIR)
-		$(CC) $(CFLAGS) -c $< -o $@
+		$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 # Rule to create the bonus library
 bonus: $(OBJSB) $(OBJSM) $(OBJSDIR)
 		ar -rcs $(NAME) $(OBJSB) $(OBJSM)
+
+$(OBJSDIR):
+	mkdir -p $(OBJSDIR)
 
 # Rule to clean up object files
 clean:
@@ -49,7 +49,7 @@ clean:
 
 # Rule to clean up object files and the library
 fclean: clean
-		rm -f $(NAME)
+		rm -rf $(NAME)
 
 # Rule to fclean and redo all
 re: fclean all
