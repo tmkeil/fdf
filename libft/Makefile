@@ -29,7 +29,7 @@ OBJSB = $(addprefix $(OBJSDIR)/, $(BONUS_SRCS:.c=.o))
 all: $(NAME)
 
 # Rule to create the library
-$(NAME): $(OBJSM) $(OBJSDIR)
+$(NAME): $(OBJSM)
 		ar -rcs $@ $^
 
 # Rule to compile .c files to .o files
@@ -37,7 +37,7 @@ $(OBJSDIR)/%.o: $(SRCSDIR)/%.c | $(OBJSDIR)
 		$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 # Rule to create the bonus library
-bonus: $(OBJSB) $(OBJSM) $(OBJSDIR)
+bonus: $(OBJSB) $(OBJSM)
 		ar -rcs $(NAME) $(OBJSB) $(OBJSM)
 
 $(OBJSDIR):

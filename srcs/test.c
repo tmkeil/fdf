@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:50:50 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/15 02:41:32 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/15 16:16:55 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int main(void)
+int	main(void)
 {
-    void    *a;
+	void	*a;
 
-    a = mlx_init();
-    if (!a)
-        return (1);
-    mlx_destroy_display(a);
-    free(a);
+	a = mlx_init();
+	if (!a)
+		return (1);
+	mlx_destroy_display(a);
+	free(a);
 }
