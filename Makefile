@@ -5,15 +5,15 @@ NAME = fdf
 # Platform-specific settings
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
-    INCLUDES = -I/usr/include -I$(LIBFTHEADERS) -I$(MINILIBXDIR) -O3
-    LIBS = -L/usr/lib -lX11 -lXext -lz -lm -L$(LIBFTDIR) -lft -L$(MINILIBXDIR) -lmlx_Linux
+    INCLUDES = -I/usr/local/include -I$(LIBFTHEADERS) -I$(MINILIBXDIR)
+    LIBS = -L/usr/local/lib/ -lX11 -lXext -L$(LIBFTDIR) -lft -L$(MINILIBXDIR) -lmlx
 else
-    INCLUDES = -I$(HEADERSDIR) -I$(LIBFTHEADERS) -I$(MINILIBXDIR) -O3
-    LIBS = -framework OpenGL -framework AppKit -L$(LIBFTDIR) -lft -L$(MINILIBXDIR) -lmlx
+    INCLUDES = -I/usr/local/include -I$(HEADERSDIR) -I$(LIBFTHEADERS) -I$(MINILIBXDIR)
+    LIBS = -L/usr/local/lib/ -framework OpenGL -framework AppKit -L$(LIBFTDIR) -lft -L$(MINILIBXDIR) -lmlx
 endif
 
 # directories
-MINILIBXDIR = minilibx-linux
+MINILIBXDIR = mlx
 MINILIBX = $(MINILIBXDIR)/libmlx.a
 LIBFTDIR = libft
 LIBFT = $(LIBFTDIR)/libft.a
@@ -26,22 +26,25 @@ SRCS = test.c
 SRCSS = $(addprefix $(SRCSDIR)/, $(SRCS))
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))
 
-$(OBJSDIR)/%.o: $(SRCSDIR)/%.c | $(OBJSDIR)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-$(OBJSDIR):
-	mkdir -p $(OBJSDIR)
-
-$(LIBFT):
-	$(MAKE) -C $(LIBFTDIR)
-
-$(MINILIBX):
-	$(MAKE) -C $(MINILIBXDIR)
-
 all: $(NAME)
 
 $(NAME): $(MINILIBX) $(LIBFT) $(OBJS)
+	@echo "Trying to create"
 	$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(INCLUDES) -o $(NAME)
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFTDIR)/
+
+$(MINILIBX):
+	$(MAKE) -C $(MINILIBXDIR)/
+
+$(OBJSDIR):
+	@echo "abc"
+	mkdir -p $(OBJSDIR)
+
+$(OBJSDIR)/%.o: $(SRCSDIR)/%.c | $(OBJSDIR)
+	@echo "Compiling $< -> $@"
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 re:
 	fclean all
@@ -56,4 +59,4 @@ fclean: clean
 	$(MAKE) -C $(LIBFTDIR) fclean
 	$(MAKE) -C $(MINILIBXDIR) fclean
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re $(LIBFT) $(MINILIBX)
