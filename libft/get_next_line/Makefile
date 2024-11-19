@@ -18,9 +18,6 @@ $(NAME): $(OBJS)
 
 bonus: $(BOBJS) $(OBJS)
 	ar -rcs $(NAME) $(BOBJS) $(OBJS)
-comp:
-	cc *.c
-	./a.out
 
 clean:
 	rm -f $(OBJS) $(BOBJS)
