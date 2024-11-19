@@ -6,21 +6,33 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:50:50 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/18 22:42:03 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/19 19:19:36 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_drawline(t_mlx *mlx, t_line *line)
+void	ft_put_buffer_to_window(t_data *data, t_image_data *current)
 {
-	int	e;
+	t_mlx	*mlx;
 
+	mlx = data->var;
+	mlx_put_image_to_window(mlx->mlx_ptr, mlx->mlx_win, current->img, 0, 0);
+	data->img->current = current;
+}
+
+void	ft_drawline(t_data *data, t_line *line)
+{
+	int				e;
+	t_image_data	*current;
+
+	current = NULL;
 	ft_arrangeline(line);
-	ft_window_fill(mlx, BACKCOL);
+	ft_set_current(data, &current);
+	ft_paint_buffer(data->var, current, BACKCOL);
 	while (1)
 	{
-		ft_putpxl(mlx->img0, line->p1->x, line->p1->y, line->p1->color);
+		ft_putpxl(current, line->p1->x, line->p1->y, line->p1->color);
 		if (line->p1->x == line->p2->x && line->p1->y == line->p2->y)
 			break ;
 		e = 2 * line->error;
@@ -35,6 +47,7 @@ void	ft_drawline(t_mlx *mlx, t_line *line)
 			line->p1->y += line->sy;
 		}
 	}
+	ft_put_buffer_to_window(data, current);
 }
 
 void	ft_linealloc(t_line **line)
@@ -56,45 +69,22 @@ void	ft_linealloc(t_line **line)
 
 // int	main(void)
 // {
-// 	t_mlx			*mlx;
-// 	t_line			*line;
-// 	t_image_data	*img;
+// 	t_data	*data;
+// 	t_line	*line;
 
-// 	mlx = malloc(sizeof(t_mlx));
-// 	img = malloc(sizeof(t_image_data));
-// 	if (!mlx || !img)
+// 	data = NULL;
+// 	if (!ft_init(&data))
 // 		return (1);
-// 	mlx->mlx_ptr = mlx_init();
-// 	if (!mlx->mlx_ptr)
-// 		return (free(mlx), 1);
-// 	mlx->mlx_win = mlx_new_window(mlx->mlx_ptr, WIDTH, HEIGHT, "Hello world!");
-// 	img->img = mlx_new_image(mlx->mlx_ptr, WIDTH, HEIGHT);
-// 	img->data = mlx_get_data_addr(img->img, &img->bpp, &img->linelen,
-// 			&img->endian);
-// 	if (!mlx->mlx_win)
-// 		return (free(mlx), 1);
 // 	ft_linealloc(&line);
-// 	mlx->img0 = img;
-// 	ft_drawline(mlx, line);
-// 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->mlx_win, mlx->img0->img, 0, 0);
-// 	mlx_loop(mlx);
-// 	free(mlx);
+// 	ft_drawline(data, line);
+// 	ft_put_buffer_to_window(data, data->img->current);
+// 	mlx_loop(data->var->mlx_ptr);
+// 	free(data->var);
 // }
-
-int	ft_prep_mlx(t_mlx *mlx)
-{
-	mlx = malloc(sizeof(t_mlx));
-	if (!mlx)
-		return (0);
-	mlx->mlx_ptr = mlx_init();
-	if (!mlx->mlx_ptr)
-		return (free(mlx), 1);
-	return (0);
-}
 
 int	main(int argc, char *argv[])
 {
-	t_mlx	*mlx;
+	t_data	*data;
 	t_map	*map;
 
 	if (argc != 2 || !*argv[1])
@@ -106,7 +96,7 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (!ft_valid_input(map))
 		return (ft_clear(map), 1);
-	if (!ft_prep_mlx(mlx))
+	if (!ft_init(mlx))
 		return (ft_clear(map), 1);
 	ft_wireframe(mlx, map);
 	mlx_loop(mlx);

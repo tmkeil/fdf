@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/18 22:13:09 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/19 19:18:21 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@
 # include <stdio.h>
 # include <stdlib.h>
 
+typedef struct s_mlx
+{
+	void			*mlx_ptr;
+	void			*mlx_win;
+}					t_mlx;
+
 typedef struct s_image_data
 {
 	void			*img;
@@ -34,20 +40,18 @@ typedef struct s_image_data
 	int				endian;
 }					t_image_data;
 
-typedef struct s_mlx
-{
-	void			*mlx_ptr;
-	void			*mlx_win;
-	t_image_data	*img0;
-	t_image_data	*img1;
-	t_image_data	*img2;
-}					t_mlx;
-
 typedef struct s_imgs
 {
-	t_image_data	*img1;
-	t_image_data	*img2;
+	t_image_data	*current;
+	t_image_data	*buffer1;
+	t_image_data	*buffer2;
 }					t_imgs;
+
+typedef struct s_data
+{
+	t_mlx			*var;
+	t_imgs			*img;
+}					t_data;
 
 typedef struct s_point
 {
@@ -81,16 +85,19 @@ typedef struct s_map
 	int				height;
 }					t_map;
 
-typedef struct s_nested
-{
-	void			**val_col;
-}					t_nested;
+// init
+int					ft_init_imgs(t_data **data);
+int					ft_init_var(t_data **data);
+int					ft_init(t_data **data);
+void				ft_set_current(t_data *data, t_image_data **current);
 
+//
 void				del(void *content);
 int					ft_abs(int value);
+void				ft_clear(t_data *data);
 int					ft_rgb(int r, int g, int b);
 void				ft_arrangeline(t_line *line);
-void				ft_window_fill(t_mlx *mlx, int color);
 void				ft_putpxl(t_image_data *img, int x, int y, int color);
+void				ft_paint_buffer(t_mlx *mlx, t_image_data *img, int color);
 
 #endif
