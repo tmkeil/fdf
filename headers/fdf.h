@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/18 18:27:59 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/18 22:13:09 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@
 # define PKTCOL 0x000000
 
 # include "../mlx/mlx.h"
+# include "libft.h"
+# include <fcntl.h>
 # include <math.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 
@@ -50,6 +53,7 @@ typedef struct s_point
 {
 	int				x;
 	int				y;
+	int				z;
 	int				color;
 }					t_point;
 
@@ -70,6 +74,19 @@ typedef struct s_wireframe
 	t_line			*lines;
 }					t_wireframe;
 
+typedef struct s_map
+{
+	t_point			**matrix;
+	int				*widths;
+	int				height;
+}					t_map;
+
+typedef struct s_nested
+{
+	void			**val_col;
+}					t_nested;
+
+void				del(void *content);
 int					ft_abs(int value);
 int					ft_rgb(int r, int g, int b);
 void				ft_arrangeline(t_line *line);

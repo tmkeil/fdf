@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:50:50 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/18 18:35:01 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/18 22:42:03 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,34 @@ void	ft_linealloc(t_line **line)
 // 	free(mlx);
 // }
 
+int	ft_prep_mlx(t_mlx *mlx)
+{
+	mlx = malloc(sizeof(t_mlx));
+	if (!mlx)
+		return (0);
+	mlx->mlx_ptr = mlx_init();
+	if (!mlx->mlx_ptr)
+		return (free(mlx), 1);
+	return (0);
+}
+
 int	main(int argc, char *argv[])
 {
-	
+	t_mlx	*mlx;
+	t_map	*map;
+
+	if (argc != 2 || !*argv[1])
+		return (1);
+	map = malloc(sizeof(t_map));
+	if (!map)
+		return (1);
+	if (!ft_parsemap(map, argv[1]))
+		return (1);
+	if (!ft_valid_input(map))
+		return (ft_clear(map), 1);
+	if (!ft_prep_mlx(mlx))
+		return (ft_clear(map), 1);
+	ft_wireframe(mlx, map);
+	mlx_loop(mlx);
+	return (ft_clear(map), free(mlx), 0);
 }
