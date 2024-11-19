@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:50:50 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/19 19:19:36 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/19 20:03:24 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,28 @@ void	ft_linealloc(t_line **line)
 	(*line)->p2->y = 600;
 }
 
+int	main(int argc, char *argv[])
+{
+	t_data	*data;
+	t_map	*map;
+
+	data = NULL;
+	map = NULL;
+	if (argc < 2 && argc != 4)
+		return (1);
+	if (argc != 2 || !*argv[1])
+		return (1);
+	if (!ft_parsemap(&map, argv[1]))
+		return (ft_clear(map), 1);
+	if (!ft_valid_input(map))
+		return (ft_clear(map), 1);
+	if (!ft_init(&data))
+		return (ft_clear(map), 1);
+	ft_wireframe(data, map);
+	mlx_loop(data->var->mlx_ptr);
+	return (ft_clear(map), ft_clear(data), 0);
+}
+
 // int	main(void)
 // {
 // 	t_data	*data;
@@ -81,24 +103,3 @@ void	ft_linealloc(t_line **line)
 // 	mlx_loop(data->var->mlx_ptr);
 // 	free(data->var);
 // }
-
-int	main(int argc, char *argv[])
-{
-	t_data	*data;
-	t_map	*map;
-
-	if (argc != 2 || !*argv[1])
-		return (1);
-	map = malloc(sizeof(t_map));
-	if (!map)
-		return (1);
-	if (!ft_parsemap(map, argv[1]))
-		return (1);
-	if (!ft_valid_input(map))
-		return (ft_clear(map), 1);
-	if (!ft_init(mlx))
-		return (ft_clear(map), 1);
-	ft_wireframe(mlx, map);
-	mlx_loop(mlx);
-	return (ft_clear(map), free(mlx), 0);
-}

@@ -6,137 +6,106 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:58:12 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/18 22:54:25 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/19 21:47:24 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-long	ft_atol(char *s)
-{
-	size_t	i;
-	int		p;
-	long	val;
-	bool	valid;
-
-	i = 0;
-	p = 1;
-	val = 0;
-	valid = false;
-	while (s[i] && (s[i] == ' ' || (s[i] >= 9 && s[i] <= 13)))
-		i++;
-	if (s[i] == '-' || s[i] == '+')
-	{
-		if (s[i++] == '-')
-			p = -1;
-	}
-	while (s[i] >= '0' && s[i] <= '9')
-	{
-		valid = true;
-		val = val * 10 + (s[i++] - '0');
-	}
-	if (!valid || s[i] != '\0')
-		return (LONG_MIN);
-	return (val * p);
-}
-
-size_t	ft_len(char **map_ln)
-{
-	size_t	i;
-
-	i = 0;
-	while (map_ln[i])
-		i++;
-	return (i);
-}
-
-int	ft_fill_map(t_map **map, t_nested *nested, size_t count)
+int	ft_map_profile(t_map **map, char **split, int size, int i)
 {
 	long	val;
-	int		*values;
-	int		i;
 
-	values = (int *)malloc(sizeof(int) * count);
-	if (!values)
+	val = ft_atol(split[0]);
+	if (val >= INT_MAX || val <= INT_MIN)
 		return (0);
-	i = 0;
-	while (i < count)
-	{
-		val = ft_atol(str[i]);
-		if (val > INT_MAX || val < INT_MIN || val == LONG_MIN)
-			return (free(values), 0);
-		values[i++] = (int)val;
-	}
-	i = 0;
-	while (i < count)
-		ft_lstadd_back(map, ft_lstnew(values[i++]));
-	return (free(values), 1);
-}
-
-int	ft_parseline(t_map *map, char **map_ln)
-{
-	
-}
-
-int	ft_calloc_widths(t_map *map, int fd)
-{
-	int	fd2;
-	int	*line;
-	int	i;
-
-	i = 0;
-	fd2 = fd;
-	while (1)
-	{
-		line = get_next_line(fd2);
-		if (!line)
-			break ;
-		map->widths[i] = ft_linelength(line);
-	}
-}
-
-int	ft_calloc_map(t_map *map, int fd)
-{
-	int		fd2;
-	int		height;
-	char	**splitted;
-	char	*line;
-
-	fd2 = fd;
-	height = 0;
-	while (get_next_line(fd2))
-		height++;
-	map->height = height;
-	map->widths = malloc(sizeof(int) * height);
-	map->matrix = malloc(sizeof(t_point *) * (map->height));
-	ft_calloc_widths(map, fd);
-	if (!map->widths || !map->matrix)
-		return (0);
+	(*map)->profile[i] = (int) val;
 	return (1);
 }
 
-int	ft_parsemap(t_map *map, char **argv)
+int	ft_map_colors(t_map **map, char **split, int size, int i)
+{
+	long	val;
+
+	if (!split[1])
+		(*map)->colors[i] = PKTCOL;
+	else
+	{
+		val = ft_atol(split[1]);
+		if (val >= INT_MAX || val <= INT_MIN)
+			return (0);
+		(*map)->colors[i] = (int) val;
+	}
+	return (1);
+}
+
+int	ft_map_matrix(t_map **map, char *line, int i)
+{
+	int		i;
+	long	val;
+	char	**split;
+	char	**split2;
+
+	split = ft_split(line, ' ');
+	(*map)->profile[i] = malloc(sizeof(int) * (*map)->widths[i]);
+	(*map)->colors[i] = malloc(sizeof(int) * (*map)->widths[i]);
+	if (!split || (*map)->profile[i++] || !(*map)->colors[i])
+		return (ft_clear(split), 0);
+	i = 0;
+	while (split[i])
+	{
+		split2 = ft_split(split[i], ',');
+		if (!split2)
+			return (ft_clear(split), 0);
+		if (!ft_map_profile(map, split2, (*map)->widths[i], i))
+			return (ft_clear(split), ft_clear(split2), 0);
+		if (!ft_map_colors(map, split2, (*map)->widths[i], i))
+			return (ft_clear(split), ft_clear(split2), 0);
+		i++;
+	}
+	return (ft_clear(split), ft_clear(split2), 1);
+}
+
+int	ft_init_map(t_map **map, int fd)
+{
+	int		height;
+	char	*line;
+	int		i;
+
+	*map = malloc(sizeof(t_map));
+	if (!map)
+		return (0);
+	height = ft_map_height(fd);
+	(*map)->height = height;
+	(*map)->widths = malloc(sizeof(int) * height);
+	(*map)->profile = malloc(sizeof(int *) * height);
+	(*map)->colors = malloc(sizeof(int *) * height);
+	if (!(*map)->widths || !(*map)->profile || !(*map)->colors)
+		return (0);
+	i = 0;
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		(*map)->widths[i] = ft_wordcount(line);
+		if (!ft_map_matrix(map, line, i++))
+			return (free(line), 0);
+	}
+	return (free(line), 1);
+}
+
+int	ft_parsemap(t_map **map, char **argv)
 {
 	char	*line;
 	char	**map_ln;
 	int		fd;
 	int		height;
 
-	fd = open(argv[0], O_RDONLY);
+	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		return (0);
-	if (!ft_calloc_map(map, fd))
-		return (0);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		map_ln = ft_split(line, ' ');
-		if (!map_ln)
-			return (free(line), free(map_ln), ft_clear(map), 0);
-		if (!ft_parseline(map, map_ln))
-			return (free(line), free(map_ln), ft_clear(map), 0);
-	}
-	return (free(line), free(map_ln), 1);
+		return (perror("Error opening file"), 0);
+	if (!ft_init_map(&map, fd))
+		return (close(fd), 0);
+	return (close(fd), 1);
 }

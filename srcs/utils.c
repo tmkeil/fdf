@@ -6,15 +6,18 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:50:10 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/19 18:14:41 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/19 20:33:49 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	ft_abs(int value)
+void	ft_set_current(t_data *data, t_image_data **current)
 {
-	return ((((value) * ((value) >= 0)) - ((value) * ((value) < 0))));
+	if (data->img->current == data->img->buffer1)
+		*current = data->img->buffer2;
+	else
+		*current = data->img->buffer1;
 }
 
 void	ft_arrangeline(t_line *line)
@@ -56,9 +59,12 @@ void	ft_paint_buffer(t_mlx *mlx, t_image_data *buffer, int color)
 	}
 }
 
-int	ft_rgb(int r, int g, int b)
+int	ft_map_height(int fd)
 {
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		return (-1);
-	return (r << 16 | g << 8 | b);
+	int	height;
+
+	height = 0;
+	while (get_next_line(fd))
+		height++;
+	return (height);
 }
