@@ -6,35 +6,35 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:58:12 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/19 21:47:24 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/19 22:52:30 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	ft_map_profile(t_map **map, char **split, int i)
+int	ft_map_profile(t_map **map, char **split, int i, int j)
 {
 	long	val;
 
 	val = ft_atol(split[0]);
 	if (val >= INT_MAX || val <= INT_MIN)
 		return (0);
-	(*map)->profile[i] = (int) val;
+	(*map)->profile[i][j] = (int) val;
 	return (1);
 }
 
-int	ft_map_colors(t_map **map, char **split, int i)
+int	ft_map_colors(t_map **map, char **split, int i, int j)
 {
 	long	val;
 
 	if (!split[1])
-		(*map)->colors[i] = PKTCOL;
+		(*map)->colors[i][j] = PKTCOL;
 	else
 	{
 		val = ft_atol(split[1]);
 		if (val >= INT_MAX || val <= INT_MIN)
 			return (0);
-		(*map)->colors[i] = (int) val;
+		(*map)->colors[i][j] = (int) val;
 	}
 	return (1);
 }
@@ -42,7 +42,6 @@ int	ft_map_colors(t_map **map, char **split, int i)
 int	ft_map_matrix(t_map **map, char *line, int i)
 {
 	int		j;
-	long	val;
 	char	**split;
 	char	**split2;
 
@@ -52,16 +51,16 @@ int	ft_map_matrix(t_map **map, char *line, int i)
 	if (!split || !(*map)->profile[i] || !(*map)->colors[i])
 		return (ft_clear(split), 0);
 	j = 0;
-	while (split[i])
+	while (split[j])
 	{
-		split2 = ft_split(split[i], ',');
+		split2 = ft_split(split[j], ',');
 		if (!split2)
 			return (ft_clear(split), 0);
-		if (!ft_map_profile(map, split2, i))
+		if (!ft_map_profile(map, split2, i, j))
 			return (ft_clear(split), ft_clear(split2), 0);
-		if (!ft_map_colors(map, split2, i))
+		if (!ft_map_colors(map, split2, i, j))
 			return (ft_clear(split), ft_clear(split2), 0);
-		i++;
+		j++;
 	}
 	return (ft_clear(split), ft_clear(split2), 1);
 }
