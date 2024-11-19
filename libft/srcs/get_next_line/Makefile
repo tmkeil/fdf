@@ -2,6 +2,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 NAME = getnextlinelibft.a
+INCLUDES = -I../../headers
 SRCS = get_next_line.c get_next_line_utils.c
 BSRCS = get_next_line_bonus.c get_next_line_utils_bonus.c
 OBJS = $(SRCS:.c=.o)
@@ -11,13 +12,14 @@ BOBJS = $(BSRCS:.c=.o)
 all: $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(OBJS)
 	ar -rcs $@ $<
 
 bonus: $(BOBJS) $(OBJS)
 	ar -rcs $(NAME) $(BOBJS) $(OBJS)
+
 comp:
 	cc *.c
 	./a.out
