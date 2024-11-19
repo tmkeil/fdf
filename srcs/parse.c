@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-int	ft_map_profile(t_map **map, char **split, int size, int i)
+int	ft_map_profile(t_map **map, char **split, int i)
 {
 	long	val;
 
@@ -23,7 +23,7 @@ int	ft_map_profile(t_map **map, char **split, int size, int i)
 	return (1);
 }
 
-int	ft_map_colors(t_map **map, char **split, int size, int i)
+int	ft_map_colors(t_map **map, char **split, int i)
 {
 	long	val;
 
@@ -41,7 +41,7 @@ int	ft_map_colors(t_map **map, char **split, int size, int i)
 
 int	ft_map_matrix(t_map **map, char *line, int i)
 {
-	int		i;
+	int		j;
 	long	val;
 	char	**split;
 	char	**split2;
@@ -49,17 +49,17 @@ int	ft_map_matrix(t_map **map, char *line, int i)
 	split = ft_split(line, ' ');
 	(*map)->profile[i] = malloc(sizeof(int) * (*map)->widths[i]);
 	(*map)->colors[i] = malloc(sizeof(int) * (*map)->widths[i]);
-	if (!split || (*map)->profile[i++] || !(*map)->colors[i])
+	if (!split || !(*map)->profile[i] || !(*map)->colors[i])
 		return (ft_clear(split), 0);
-	i = 0;
+	j = 0;
 	while (split[i])
 	{
 		split2 = ft_split(split[i], ',');
 		if (!split2)
 			return (ft_clear(split), 0);
-		if (!ft_map_profile(map, split2, (*map)->widths[i], i))
+		if (!ft_map_profile(map, split2, i))
 			return (ft_clear(split), ft_clear(split2), 0);
-		if (!ft_map_colors(map, split2, (*map)->widths[i], i))
+		if (!ft_map_colors(map, split2, i))
 			return (ft_clear(split), ft_clear(split2), 0);
 		i++;
 	}
@@ -97,15 +97,12 @@ int	ft_init_map(t_map **map, int fd)
 
 int	ft_parsemap(t_map **map, char **argv)
 {
-	char	*line;
-	char	**map_ln;
 	int		fd;
-	int		height;
 
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 		return (perror("Error opening file"), 0);
-	if (!ft_init_map(&map, fd))
+	if (!ft_init_map(map, fd))
 		return (close(fd), 0);
 	return (close(fd), 1);
 }
