@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 19:14:22 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/19 19:47:13 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 18:03:13 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int	ft_init(t_data **data)
 	if (!*data)
 		return (0);
 	if (!ft_init_var(data))
-		return (ft_clear(*data), 0);
+		return (ft_cleardata(*data), 0);
 	if (!ft_init_imgs(data))
-		return (ft_clear(*data), 0);
+		return (ft_cleardata(*data), 0);
 	return (1);
 }

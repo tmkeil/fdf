@@ -6,24 +6,11 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 20:16:11 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 15:49:12 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 18:02:46 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	ft_clear(t_data *data)
-{
-	if (data->img)
-	{
-		free(data->img->buffer1);
-		free(data->img->buffer2);
-		free(data->img);
-	}
-	if (data->var)
-		free(data->var);
-	free(data);
-}
 
 size_t	ft_len(char **map_ln)
 {
