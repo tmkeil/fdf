@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:13:32 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 18:13:16 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 21:34:28 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	ft_clrptr(void **ptr)
 	while (ptr[i])
 		free(ptr[i++]);
 	free(ptr);
-	*ptr = NULL;
 }
 
 void	ft_clearmap(t_map *map)

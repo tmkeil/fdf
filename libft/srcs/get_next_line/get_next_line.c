@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 15:44:02 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 14:12:05 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 21:20:04 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,23 @@ static char	*ft_process_line(char **rest)
 	char	*ptr_nl;
 	char	*temp;
 
-	if (!*rest)
-		return (NULL);
+	if (!*rest || **rest == '\0')
+		return (ft_free(rest), NULL);
 	ptr_nl = ft_strchr2(*rest, '\n');
 	if (ptr_nl)
 	{
 		line = ft_substr2(*rest, 0, ptr_nl - *rest + 1);
+		if (!line)
+			return (ft_free(rest), NULL);
 		temp = ft_strdup2(ptr_nl + 1);
+		if (!temp)
+			return (ft_free(&line), ft_free(rest), NULL);
 		ft_free(rest);
 		*rest = temp;
 		return (line);
 	}
-	if (**rest == '\0')
-	{
-		ft_free(rest);
-		return (NULL);
-	}
 	line = ft_strdup2(*rest);
-	ft_free(rest);
-	return (line);
+	return (ft_free(rest), line);
 }
 
 static char	*ft_free_and_return_null(char **rest)
@@ -59,8 +57,7 @@ static char	*ft_read_and_join(int fd, char **rest, char *buffer)
 	ssize_t	bytes;
 	char	*temp;
 
-	bytes = 1;
-	while (!ft_strchr2(*rest, '\n') && bytes > 0)
+	while (!ft_strchr2(*rest, '\n'))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes < 0)
@@ -82,23 +79,18 @@ static char	*ft_read_and_join(int fd, char **rest, char *buffer)
 char	*get_next_line(int fd)
 {
 	static char	*rest;
-	char		*buffer;
+	char		buffer[BUFFER_SIZE + 1];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
-		return (NULL);
 	if (!rest)
 		rest = ft_strdup2("");
 	if (!rest)
-	{
-		ft_free(&buffer);
 		return (NULL);
-	}
 	line = ft_read_and_join(fd, &rest, buffer);
-	ft_free(&buffer);
+	if (!line)
+		ft_free(&rest);
 	return (line);
 }
 

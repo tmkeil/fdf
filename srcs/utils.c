@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:50:10 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 18:13:12 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 21:45:06 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ void	ft_putpxl(t_img *img, int x, int y, int color)
 	*(unsigned int *)(img->data + offset) = color;
 }
 
-void	ft_paint_buffer(t_mlx *mlx, t_img *buffer, int color)
+void	ft_paint_buffer(t_img *buffer, int color)
 {
 	int	i;
 	int	j;
 
 	if (!buffer || !buffer->img)
 		return ;
-	buffer->img = mlx_new_image(mlx->mlx_ptr, WIDTH, HEIGHT);
-	buffer->data = mlx_get_data_addr(buffer->img, &buffer->bpp,
-			&buffer->linelen, &buffer->endian);
+	// buffer->img = mlx_new_image(mlx->mlx_ptr, WIDTH, HEIGHT);
+	// buffer->data = mlx_get_data_addr(buffer->img, &buffer->bpp,
+	// 		&buffer->linelen, &buffer->endian);
 	i = 0;
 	while (i < HEIGHT)
 	{
@@ -59,11 +59,13 @@ void	ft_paint_buffer(t_mlx *mlx, t_img *buffer, int color)
 	}
 }
 
-void	ft_put_buffer_to_window(t_data *data, t_img *current)
+void	ft_put_buffer_to_window(t_data *data)
 {
 	t_mlx	*mlx;
+	t_img	*current;
 
 	mlx = data->var;
+	current = data->img->current;
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->mlx_win, current->img, 0, 0);
 	data->img->current = current;
 }
