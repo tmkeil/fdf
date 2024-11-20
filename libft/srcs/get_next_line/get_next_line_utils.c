@@ -6,13 +6,13 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:35:38 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 14:06:44 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 14:09:29 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen2(const char *s)
 {
 	size_t	i;
 
@@ -25,7 +25,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr2(char const *s, unsigned int start, size_t len)
 {
 	char	*ptr;
 	size_t	size;
@@ -33,9 +33,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	if (start >= ft_strlen(s))
+	if (start >= ft_strlen2(s))
 		return (ft_strdup(""));
-	size = ft_strlen(s + start);
+	size = ft_strlen2(s + start);
 	if (size > len)
 		size = len;
 	ptr = (char *)malloc(sizeof(char) * (size + 1));
@@ -51,7 +51,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (ptr);
 }
 
-char	*ft_strchr(const char *str, int c)
+char	*ft_strchr2(const char *str, int c)
 {
 	char	cc;
 
@@ -69,7 +69,7 @@ char	*ft_strchr(const char *str, int c)
 	return (NULL);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup2(const char *s)
 {
 	char	*ptr;
 	size_t	len;
@@ -77,7 +77,7 @@ char	*ft_strdup(const char *s)
 
 	if (!s)
 		return (NULL);
-	len = ft_strlen(s);
+	len = ft_strlen2(s);
 	ptr = (char *) malloc(sizeof(char) * (len + 1));
 	if (!ptr)
 		return (NULL);
@@ -100,7 +100,7 @@ char	*ft_strjoin2(char *s1, char *s2)
 
 	if (!s1 && !s2)
 		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2);
+	len = ft_strlen2(s1) + ft_strlen2(s2);
 	s = (char *) malloc(sizeof(char) * (len + 1));
 	if (!s)
 		return (NULL);

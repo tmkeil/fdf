@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 15:44:02 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/19 17:27:02 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 14:10:30 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ static char	*ft_process_line(char **rest)
 
 	if (!*rest)
 		return (NULL);
-	ptr_nl = ft_strchr(*rest, '\n');
+	ptr_nl = ft_strchr2(*rest, '\n');
 	if (ptr_nl)
 	{
-		line = ft_substr(*rest, 0, ptr_nl - *rest + 1);
-		temp = ft_strdup(ptr_nl + 1);
+		line = ft_substr2(*rest, 0, ptr_nl - *rest + 1);
+		temp = ft_strdup2(ptr_nl + 1);
 		ft_free(rest);
 		*rest = temp;
 		return (line);
@@ -43,7 +43,7 @@ static char	*ft_process_line(char **rest)
 		ft_free(rest);
 		return (NULL);
 	}
-	line = ft_strdup(*rest);
+	line = ft_strdup2(*rest);
 	ft_free(rest);
 	return (line);
 }
@@ -91,7 +91,7 @@ char	*get_next_line(int fd)
 	if (!buffer)
 		return (NULL);
 	if (!rest)
-		rest = ft_strdup("");
+		rest = ft_strdup2("");
 	if (!rest)
 	{
 		ft_free(&buffer);
