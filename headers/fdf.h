@@ -6,13 +6,13 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 18:13:03 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 21:44:39 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-# define WIDTH 1000
+# define WIDTH 200
 # define HEIGHT 1000
 # define BACKCOL 0xffffff
 # define PKTCOL 0x000000
@@ -72,13 +72,6 @@ typedef struct s_wireframe
 	t_line		*lines;
 }				t_wireframe;
 
-typedef struct s_data
-{
-	t_mlx		*var;
-	t_imgs		*img;
-	t_wireframe	*wirefr;
-}				t_data;
-
 typedef struct s_map
 {
 	int			**profile;
@@ -87,6 +80,14 @@ typedef struct s_map
 	int			height;
 }				t_map;
 
+typedef struct s_data
+{
+	t_mlx		*var;
+	t_imgs		*img;
+	t_map		*map;
+	t_wireframe	*wirefr;
+}				t_data;
+
 // init
 int				ft_init(t_data **data);
 
@@ -94,8 +95,8 @@ int				ft_init(t_data **data);
 void			ft_arrangeline(t_line *line);
 void			ft_putpxl(t_img *img, int x, int y, int color);
 void			ft_set_current(t_data *data, t_img **current);
-void			ft_paint_buffer(t_mlx *mlx, t_img *img, int color);
-void			ft_put_buffer_to_window(t_data *data, t_img *current);
+void			ft_paint_buffer(t_img *img, int color);
+void			ft_put_buffer_to_window(t_data *data);
 
 // utils2
 int				ft_map_height(char *filename);
@@ -109,11 +110,14 @@ long			ft_atol(char *s);
 long			ft_atol_base(const char *str, int str_base);
 
 // parse
-int				ft_parsemap(t_map **map, char **argv);
+int				ft_parsemap(t_data **data, char **argv);
 
 // clear
 void			ft_clearmap(t_map *map);
 void			ft_clrptr(void **ptr);
 void			ft_cleardata(t_data *data);
+
+// wireframe
+void			ft_drawline(t_data *data, t_line *line);
 
 #endif
