@@ -6,13 +6,13 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 19:14:22 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 18:03:13 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 18:05:16 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	ft_init_imgs(t_data **data)
+static int	ft_init_imgs(t_data **data)
 {
 	t_image_data	**a;
 	t_image_data	**b;
@@ -39,7 +39,7 @@ int	ft_init_imgs(t_data **data)
 	return (1);
 }
 
-int	ft_init_var(t_data **data)
+static int	ft_init_var(t_data **data)
 {
 	(*data)->var = malloc(sizeof(t_mlx));
 	if (!(*data)->var)

@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 16:23:00 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 18:05:24 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,10 @@ typedef struct s_map
 }					t_map;
 
 // init
-int					ft_init_imgs(t_data **data);
-int					ft_init_var(t_data **data);
 int					ft_init(t_data **data);
 
 //
 int					ft_abs(int value);
-void				ft_clear(t_data *data);
 int					ft_rgb(int r, int g, int b);
 void				ft_arrangeline(t_line *line);
 void				ft_putpxl(t_image_data *img, int x, int y, int color);
