@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:35:38 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 14:09:29 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 14:15:20 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_substr2(char const *s, unsigned int start, size_t len)
 	if (!s)
 		return (NULL);
 	if (start >= ft_strlen2(s))
-		return (ft_strdup(""));
+		return (ft_strdup2(""));
 	size = ft_strlen2(s + start);
 	if (size > len)
 		size = len;

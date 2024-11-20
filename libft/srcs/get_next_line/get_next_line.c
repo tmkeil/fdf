@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 15:44:02 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 14:10:30 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 14:12:05 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	*ft_read_and_join(int fd, char **rest, char *buffer)
 	char	*temp;
 
 	bytes = 1;
-	while (!ft_strchr(*rest, '\n') && bytes > 0)
+	while (!ft_strchr2(*rest, '\n') && bytes > 0)
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes < 0)

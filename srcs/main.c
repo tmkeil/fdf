@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:50:50 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/19 20:03:24 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 17:54:56 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,32 @@ void	ft_linealloc(t_line **line)
 	(*line)->p2->y = 600;
 }
 
+// void	ft_print(t_map *map)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = 0;
+// 	printf("height of the map: %i\n", map->height);
+// 	while (i < map->height)
+// 	{
+// 		printf("Reihe %i. Width = %i\n", i + 1, map->widths[i]);
+// 		j = 0;
+// 		while (j < map->widths[i])
+// 		{
+// 			printf("x = %i, z = %i\n", j, map->profile[i][j]);
+// 			printf("color = %i\n", map->colors[i][j]);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
+
 int	main(int argc, char *argv[])
 {
 	t_data	*data;
 	t_map	*map;
+	t_line	*line;
 
 	data = NULL;
 	map = NULL;
@@ -78,15 +100,17 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (argc != 2 || !*argv[1])
 		return (1);
-	if (!ft_parsemap(&map, argv[1]))
-		return (ft_clear(map), 1);
-	if (!ft_valid_input(map))
-		return (ft_clear(map), 1);
+	if (!ft_parsemap(&map, argv))
+		return (ft_clearmap(map), 1);
 	if (!ft_init(&data))
-		return (ft_clear(map), 1);
-	ft_wireframe(data, map);
+		return (ft_clearmap(map), ft_cleardata(data), 1);
+	ft_linealloc(&line);
+	ft_drawline(data, line);
+	ft_print(map);
+	ft_put_buffer_to_window(data, data->img->current);
+	// ft_wireframe(data, map);
 	mlx_loop(data->var->mlx_ptr);
-	return (ft_clear(map), ft_clear(data), 0);
+	return (ft_clearmap(map), ft_cleardata(data), 0);
 }
 
 // int	main(void)

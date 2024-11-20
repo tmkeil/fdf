@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/19 21:37:33 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 16:23:00 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,6 @@ typedef struct s_imgs
 	t_image_data	*buffer2;
 }					t_imgs;
 
-typedef struct s_data
-{
-	t_mlx			*var;
-	t_imgs			*img;
-}					t_data;
-
 typedef struct s_point
 {
 	int				x;
@@ -78,12 +72,12 @@ typedef struct s_wireframe
 	t_line			*lines;
 }					t_wireframe;
 
-// typedef struct s_map
-// {
-// 	t_point			**matrix;
-// 	int				*widths;
-// 	int				height;
-// }					t_map;
+typedef struct s_data
+{
+	t_mlx			*var;
+	t_imgs			*img;
+	t_wireframe		*wirefr;
+}					t_data;
 
 typedef struct s_map
 {
@@ -107,19 +101,25 @@ void				ft_putpxl(t_image_data *img, int x, int y, int color);
 void				ft_paint_buffer(t_mlx *mlx, t_image_data *img, int color);
 
 // utils
-int					ft_map_height(int fd);
+int					ft_map_height(char *filename);
 void				ft_set_current(t_data *data, t_image_data **current);
 
 // utils2
 size_t				ft_len(char **map_ln);
 int					ft_abs(int value);
 int					ft_rgb(int r, int g, int b);
-int					ft_wordcount(char *line);
+size_t				ft_wordcount(char *line);
 
 // numbers
 long				ft_atol(char *s);
+long				ft_atol_base(const char *str, int str_base);
 
 // parse
 int					ft_parsemap(t_map **map, char **argv);
+
+// clear
+void				ft_clearmap(t_map *map);
+void				ft_clrptr(void **ptr);
+void				ft_cleardata(t_data *data);
 
 #endif

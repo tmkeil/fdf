@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 20:16:11 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/19 20:34:36 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 15:49:12 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ int	ft_rgb(int r, int g, int b)
 	return (r << 16 | g << 8 | b);
 }
 
-int	ft_wordcount(char *line)
+size_t	ft_wordcount(char *line)
 {
-	int	i;
-	int	count;
+	size_t	count;
+	size_t	i;
 
-	i = 0;
 	count = 0;
+	i = 0;
 	while (line[i])
 	{
-		if (line[i] != ' ')
+		if (line[i] != ' ' && !(line[i] >= 9 && line[i] <= 13))
 		{
 			count++;
 			while (line[i] && line[i] != ' ')

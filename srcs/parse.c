@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:58:12 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/19 22:52:30 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 17:56:49 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,22 @@ int	ft_map_profile(t_map **map, char **split, int i, int j)
 	long	val;
 
 	val = ft_atol(split[0]);
-	if (val >= INT_MAX || val <= INT_MIN)
+	if (val > INT_MAX || val < INT_MIN)
 		return (0);
-	(*map)->profile[i][j] = (int) val;
+	(*map)->profile[i][j] = (int)val;
 	return (1);
 }
 
 int	ft_map_colors(t_map **map, char **split, int i, int j)
 {
-	long	val;
+	unsigned int	val;
 
 	if (!split[1])
 		(*map)->colors[i][j] = PKTCOL;
 	else
 	{
-		val = ft_atol(split[1]);
-		if (val >= INT_MAX || val <= INT_MIN)
+		val = ft_atol_base(split[1], 16);
+		if (val > UINT32_MAX || val < 0)
 			return (0);
 		(*map)->colors[i][j] = (int) val;
 	}
@@ -49,23 +49,23 @@ int	ft_map_matrix(t_map **map, char *line, int i)
 	(*map)->profile[i] = malloc(sizeof(int) * (*map)->widths[i]);
 	(*map)->colors[i] = malloc(sizeof(int) * (*map)->widths[i]);
 	if (!split || !(*map)->profile[i] || !(*map)->colors[i])
-		return (ft_clear(split), 0);
+		return (ft_clrptr((void **)split), 0);
 	j = 0;
 	while (split[j])
 	{
 		split2 = ft_split(split[j], ',');
 		if (!split2)
-			return (ft_clear(split), 0);
+			return (ft_clrptr((void **)split), 0);
 		if (!ft_map_profile(map, split2, i, j))
-			return (ft_clear(split), ft_clear(split2), 0);
+			return (ft_clrptr((void **)split), ft_clrptr((void **)split2), 0);
 		if (!ft_map_colors(map, split2, i, j))
-			return (ft_clear(split), ft_clear(split2), 0);
+			return (ft_clrptr((void **)split), ft_clrptr((void **)split2), 0);
 		j++;
 	}
-	return (ft_clear(split), ft_clear(split2), 1);
+	return (ft_clrptr((void **)split), ft_clrptr((void **)split2), 1);
 }
 
-int	ft_init_map(t_map **map, int fd)
+int	ft_init_map(t_map **map, int fd, char *filename)
 {
 	int		height;
 	char	*line;
@@ -74,7 +74,7 @@ int	ft_init_map(t_map **map, int fd)
 	*map = malloc(sizeof(t_map));
 	if (!map)
 		return (0);
-	height = ft_map_height(fd);
+	height = ft_map_height(filename);
 	(*map)->height = height;
 	(*map)->widths = malloc(sizeof(int) * height);
 	(*map)->profile = malloc(sizeof(int *) * height);
@@ -97,11 +97,13 @@ int	ft_init_map(t_map **map, int fd)
 int	ft_parsemap(t_map **map, char **argv)
 {
 	int		fd;
+	char	*filename;
 
-	fd = open(argv[1], O_RDONLY);
+	filename = argv[1];
+	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (perror("Error opening file"), 0);
-	if (!ft_init_map(map, fd))
+	if (!ft_init_map(map, fd, filename))
 		return (close(fd), 0);
 	return (close(fd), 1);
 }

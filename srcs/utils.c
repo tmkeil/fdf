@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:50:10 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/19 20:33:49 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 15:02:24 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,22 @@ void	ft_paint_buffer(t_mlx *mlx, t_image_data *buffer, int color)
 	}
 }
 
-int	ft_map_height(int fd)
+int	ft_map_height(char *filename)
 {
-	int	height;
+	int		fd;
+	int		height;
+	char	*line;
 
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		return (perror("Error opening file"), 0);
 	height = 0;
-	while (get_next_line(fd))
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
 		height++;
-	return (height);
+	}
+	return (free(line), close(fd), height);
 }

@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 13:57:08 by tkeil             #+#    #+#             */
-/*   Updated: 2024/10/14 12:16:32 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 17:51:07 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static char	**ft_strsplitter(char **ptr, char const *s, char c)
 	i = 0;
 	while (*s)
 	{
-		if (*s != c)
+		if (*s != c && !(*s >= 9 && *s <= 13))
 		{
 			p = s;
-			while (*s && *s != c)
+			while (*s && *s != c && !(*s >= 9 && *s <= 13))
 				s++;
 			ptr[i] = ft_substr(p, 0, s - p);
 			if (!ptr[i])
@@ -59,7 +59,7 @@ static size_t	ft_count_words(char const *s, char c)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] && s[i] != c)
+		if (s[i] != c && !(s[i] >= 9 && s[i] <= 13))
 		{
 			count++;
 			while (s[i] && s[i] != c)
