@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:13:32 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 17:55:33 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 18:13:16 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	ft_clearmap(t_map *map)
 	if (!map)
 		return ;
 	if (map->profile)
-		ft_clrptr((void **) map->profile);
+		ft_clrptr((void **)map->profile);
 	if (map->colors)
-		ft_clrptr((void **) map->colors);
+		ft_clrptr((void **)map->colors);
 	if (map->widths)
 		free(map->widths);
 	free(map);

@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:58:12 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 17:56:49 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 18:13:28 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_map_colors(t_map **map, char **split, int i, int j)
 		val = ft_atol_base(split[1], 16);
 		if (val > UINT32_MAX || val < 0)
 			return (0);
-		(*map)->colors[i][j] = (int) val;
+		(*map)->colors[i][j] = (int)val;
 	}
 	return (1);
 }

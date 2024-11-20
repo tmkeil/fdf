@@ -6,25 +6,16 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:50:50 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 17:54:56 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 18:13:31 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_put_buffer_to_window(t_data *data, t_image_data *current)
-{
-	t_mlx	*mlx;
-
-	mlx = data->var;
-	mlx_put_image_to_window(mlx->mlx_ptr, mlx->mlx_win, current->img, 0, 0);
-	data->img->current = current;
-}
-
 void	ft_drawline(t_data *data, t_line *line)
 {
-	int				e;
-	t_image_data	*current;
+	int		e;
+	t_img	*current;
 
 	current = NULL;
 	ft_arrangeline(line);
@@ -106,7 +97,7 @@ int	main(int argc, char *argv[])
 		return (ft_clearmap(map), ft_cleardata(data), 1);
 	ft_linealloc(&line);
 	ft_drawline(data, line);
-	ft_print(map);
+	// ft_print(map);
 	ft_put_buffer_to_window(data, data->img->current);
 	// ft_wireframe(data, map);
 	mlx_loop(data->var->mlx_ptr);

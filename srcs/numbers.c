@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:36:59 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 17:15:04 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 18:13:25 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 long	ft_atol(char *s)
 {
-	size_t			i;
-	int				p;
-	long			val;
-	bool			valid;
+	size_t	i;
+	int		p;
+	long	val;
+	bool	valid;
 
 	i = 0;
 	p = 1;

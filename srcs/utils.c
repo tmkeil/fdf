@@ -6,13 +6,13 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:50:10 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 15:02:24 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 18:13:12 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_set_current(t_data *data, t_image_data **current)
+void	ft_set_current(t_data *data, t_img **current)
 {
 	if (data->img->current == data->img->buffer1)
 		*current = data->img->buffer2;
@@ -29,7 +29,7 @@ void	ft_arrangeline(t_line *line)
 	line->error = line->dx + line->dy;
 }
 
-void	ft_putpxl(t_image_data *img, int x, int y, int color)
+void	ft_putpxl(t_img *img, int x, int y, int color)
 {
 	int	offset;
 
@@ -39,7 +39,7 @@ void	ft_putpxl(t_image_data *img, int x, int y, int color)
 	*(unsigned int *)(img->data + offset) = color;
 }
 
-void	ft_paint_buffer(t_mlx *mlx, t_image_data *buffer, int color)
+void	ft_paint_buffer(t_mlx *mlx, t_img *buffer, int color)
 {
 	int	i;
 	int	j;
@@ -59,22 +59,11 @@ void	ft_paint_buffer(t_mlx *mlx, t_image_data *buffer, int color)
 	}
 }
 
-int	ft_map_height(char *filename)
+void	ft_put_buffer_to_window(t_data *data, t_img *current)
 {
-	int		fd;
-	int		height;
-	char	*line;
+	t_mlx	*mlx;
 
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-		return (perror("Error opening file"), 0);
-	height = 0;
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		height++;
-	}
-	return (free(line), close(fd), height);
+	mlx = data->var;
+	mlx_put_image_to_window(mlx->mlx_ptr, mlx->mlx_win, current->img, 0, 0);
+	data->img->current = current;
 }

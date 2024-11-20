@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 19:14:22 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 18:05:16 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 18:13:19 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 static int	ft_init_imgs(t_data **data)
 {
-	t_image_data	**a;
-	t_image_data	**b;
+	t_img	**a;
+	t_img	**b;
 
 	(*data)->img = malloc(sizeof(t_imgs));
 	if (!(*data)->img)
 		return (0);
-	(*data)->img->buffer1 = malloc(sizeof(t_image_data));
-	(*data)->img->buffer2 = malloc(sizeof(t_image_data));
+	(*data)->img->buffer1 = malloc(sizeof(t_img));
+	(*data)->img->buffer2 = malloc(sizeof(t_img));
 	if (!(*data)->img->buffer1 || !(*data)->img->buffer2)
 		return (0);
 	(*data)->img->current = (*data)->img->buffer1;

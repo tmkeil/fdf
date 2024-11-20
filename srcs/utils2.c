@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 20:16:11 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 18:02:46 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/20 18:13:07 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,24 @@ size_t	ft_wordcount(char *line)
 			i++;
 	}
 	return (count);
+}
+
+int	ft_map_height(char *filename)
+{
+	int		fd;
+	int		height;
+	char	*line;
+
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		return (perror("Error opening file"), 0);
+	height = 0;
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		height++;
+	}
+	return (free(line), close(fd), height);
 }
