@@ -22,7 +22,7 @@ HEADERSDIR = headers
 SRCSDIR = srcs
 OBJSDIR = objs
 
-SRCS = main.c utils.c utils2.c init.c
+SRCS = main.c utils.c utils2.c clear.c init.c parse.c numbers.c
 SRCSS = $(addprefix $(SRCSDIR)/, $(SRCS))
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))
 
@@ -33,10 +33,10 @@ $(NAME): $(MINILIBX) $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(INCLUDES) -o $(NAME)
 
 $(LIBFT):
-	$(MAKE) -C $(LIBFTDIR)/
+	$(MAKE) -C $(LIBFTDIR)
 
 $(MINILIBX):
-	$(MAKE) -C $(MINILIBXDIR)/
+	$(MAKE) -C $(MINILIBXDIR)
 
 $(OBJSDIR):
 	@echo "abc"
