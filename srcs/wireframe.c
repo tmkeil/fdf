@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:24:56 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/22 14:16:18 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/22 15:08:00 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ void	ft_drawline(t_data *data, t_line *line)
 	int		e;
 	t_img	*current;
 
-	ft_lineset_current(data, &current, line);
-	ft_paint_buffer(&current, BACKCOL);
+	ft_lineset(line);
 	while (1)
 	{
 		ft_putpxl(&current, line->p1->x, line->p1->y, line->p1->color);
@@ -87,7 +86,8 @@ int	ft_wireframe(t_data **data)
 	if (!ft_transfer_points(&data))
 		return (0);
 	ft_transform_points(&data);
-	ft_setbuffer(*data, buffer);
+	if (!ft_set_n_paint_buffer(*data, buffer))
+		return (0);
 	ft_connect_points(*data, buffer, 0, 0);
 	ft_put_buffer_to_window(data, buffer);
 }

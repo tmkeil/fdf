@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/22 14:37:25 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/22 15:07:13 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,9 @@ typedef struct s_data
 int				ft_init(t_data **data);
 
 // utils
-void			ft_setbuffer(t_data *data, t_img **buffer);
 void			ft_lineset(t_line *line);
 void			ft_putpxl(t_img **img, int x, int y, uint32_t color);
-void			ft_paint_buffer(t_img **buffer, uint16_t color);
+int				ft_set_n_paint_buffer(t_data *data, t_img **buffer);
 void			ft_put_buffer_to_window(t_data **data, t_img **current);
 
 // utils2
