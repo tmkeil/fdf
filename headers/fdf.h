@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/22 15:17:02 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/22 21:30:13 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,14 @@ typedef struct s_point
 	u_int32_t	color;
 }				t_point;
 
-typedef struct s_line
+typedef struct s_line_vars
 {
-	t_point		*p1;
-	t_point		*p2;
 	float		dx;
 	float		dy;
 	float		sx;
 	float		sy;
 	float		error;
-}				t_line;
+}				t_line_vars;
 
 typedef struct s_map
 {
@@ -76,8 +74,6 @@ typedef struct s_map
 
 typedef struct s_wireframe
 {
-	int			num_lines;
-	t_line		*lines;
 	t_point		**transformed;
 }				t_wireframe;
 
@@ -96,16 +92,17 @@ int				ft_init(t_data **data);
 void			ft_putpxl(t_img **img, int x, int y, uint32_t color);
 int				ft_set_n_paint_buffer(t_data *data, t_img **buffer);
 void			ft_put_buffer_to_window(t_data **data, t_img **current);
+int				ft_drawline(t_point *p1, t_point *p2, t_img **buffer);
 
 // utils2
 int				ft_map_height(char *filename);
 int				ft_abs(float value);
 size_t			ft_wordcount(char *line);
-void			ft_lineset(t_line *line);
+int				ft_lineset(t_line_vars **line, t_point *p1, t_point *p2);
 
 // numbers
 long			ft_atol(char *s);
-uint32_t		ft_atol_base(const char *str, int str_base);
+long			ft_atol_base(const char *str, int str_base);
 
 // parse
 int				ft_parsemap(t_data **data, char **argv);
@@ -119,8 +116,9 @@ int				ft_wireframe(t_data **data);
 
 // transformation
 void			ft_translate(t_data **data, float x, float y, float z);
-void			ft_rotate_x(t_data **data, float phi);
-void			ft_rotate_y(t_data **data, float phi);
-void			ft_rotate_z(t_data **data, float phi);
+void			ft_rotate_x(t_point *point, float rad);
+void			ft_rotate_y(t_point *point, float rad);
+void			ft_rotate_z(t_point *point, float rad);
+void			ft_rotate(t_data **d, float p, void (*f)(t_point *, float));
 
 #endif

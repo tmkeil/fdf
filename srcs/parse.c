@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:58:12 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/21 18:05:26 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/22 16:46:50 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_map_profil(t_map **map, char **split, int i, int j)
 
 int	ft_map_cls(t_map **map, char **split, int i, int j)
 {
-	unsigned int	val;
+	long	val;
 
 	if (!split[1])
 		(*map)->colors[i][j] = PKTCOL;

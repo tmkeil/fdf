@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:50:50 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/22 14:39:00 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/22 20:56:52 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (!ft_parsemap(&data, argv))
 		return (ft_cleardata(data), 1);
-	if (!ft_wireframe(data))
+	// ft_print(data->map);
+	if (!ft_wireframe(&data))
 		return (ft_cleardata(data), 1);
 	mlx_loop(data->var->mlx_ptr);
 	return (ft_cleardata(data), 0);

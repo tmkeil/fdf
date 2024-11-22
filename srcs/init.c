@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 19:14:22 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/21 21:05:01 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/22 16:11:03 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,11 @@ static int	ft_init_map(t_data **data)
 
 static int	ft_init_wireframe(t_data **data)
 {
-	t_line		**lines;
 	t_wireframe	**wire;
 
 	wire = &(*data)->wirefr;
 	*wire = malloc(sizeof(t_wireframe));
 	if (!*wire)
-		return (0);
-	(*wire)->lines = malloc(sizeof(t_line));
-	if (!(*wire)->lines)
-		return (0);
-	lines = &(*wire)->lines;
-	(*lines)->p1 = malloc(sizeof(t_point));
-	(*lines)->p2 = malloc(sizeof(t_point));
-	if (!(*lines)->p1 || !(*lines)->p2)
 		return (0);
 	return (1);
 }
