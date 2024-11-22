@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:24:56 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/22 15:08:00 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/22 15:09:53 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,5 @@ int	ft_wireframe(t_data **data)
 	if (!ft_set_n_paint_buffer(*data, buffer))
 		return (0);
 	ft_connect_points(*data, buffer, 0, 0);
-	ft_put_buffer_to_window(data, buffer);
+	return (ft_put_buffer_to_window(data, buffer), 1);
 }

@@ -6,32 +6,32 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 20:16:11 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/22 13:25:34 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/22 15:12:26 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-size_t	ft_len(char **map_ln)
-{
-	size_t	i;
+// size_t	ft_len(char **map_ln)
+// {
+// 	size_t	i;
 
-	i = 0;
-	while (map_ln[i])
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	while (map_ln[i])
+// 		i++;
+// 	return (i);
+// }
+
+// int	ft_rgb(int r, int g, int b)
+// {
+// 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+// 		return (-1);
+// 	return (r << 16 | g << 8 | b);
+// }
 
 int	ft_abs(float value)
 {
 	return ((((value) * ((value) >= 0)) - ((value) * ((value) < 0))));
-}
-
-int	ft_rgb(int r, int g, int b)
-{
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-		return (-1);
-	return (r << 16 | g << 8 | b);
 }
 
 size_t	ft_wordcount(char *line)
