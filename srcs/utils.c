@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:50:10 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/22 15:07:06 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/22 15:16:19 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ int	ft_set_n_paint_buffer(t_data *data, t_img **buffer)
 	int	j;
 
 	if (!data->img->buffer1 || !data->img->buffer2)
-		return ;
+		return (0);
 	if (data->img->current == data->img->buffer1)
 		*buffer = data->img->buffer2;
 	else
 		*buffer = data->img->buffer1;
 	if (!buffer || !*buffer || !(*buffer)->data)
-		return ;
+		return (0);
 	i = 0;
 	while (i < HEIGHT)
 	{
@@ -45,15 +45,6 @@ int	ft_set_n_paint_buffer(t_data *data, t_img **buffer)
 			ft_putpxl(buffer, j++, i, BACKCOL);
 		i++;
 	}
-}
-
-void	ft_lineset(t_line *line)
-{
-	line->dx = ft_abs(line->p2->x - line->p1->x);
-	line->dy = -(ft_abs(line->p2->y - line->p1->y));
-	line->sx = (line->p1->x < line->p2->x) - (line->p1->x >= line->p2->x);
-	line->sy = (line->p1->y < line->p2->y) - (line->p1->y >= line->p2->y);
-	line->error = line->dx + line->dy;
 }
 
 void	ft_put_buffer_to_window(t_data **data, t_img **current)

@@ -6,28 +6,11 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 20:16:11 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/22 15:12:26 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/22 15:16:38 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-// size_t	ft_len(char **map_ln)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	while (map_ln[i])
-// 		i++;
-// 	return (i);
-// }
-
-// int	ft_rgb(int r, int g, int b)
-// {
-// 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
-// 		return (-1);
-// 	return (r << 16 | g << 8 | b);
-// }
 
 int	ft_abs(float value)
 {
@@ -74,3 +57,29 @@ int	ft_map_height(char *filename)
 	}
 	return (free(line), close(fd), height);
 }
+
+void	ft_lineset(t_line *line)
+{
+	line->dx = ft_abs(line->p2->x - line->p1->x);
+	line->dy = -(ft_abs(line->p2->y - line->p1->y));
+	line->sx = (line->p1->x < line->p2->x) - (line->p1->x >= line->p2->x);
+	line->sy = (line->p1->y < line->p2->y) - (line->p1->y >= line->p2->y);
+	line->error = line->dx + line->dy;
+}
+
+// size_t	ft_len(char **map_ln)
+// {
+// 	size_t	i;
+
+// 	i = 0;
+// 	while (map_ln[i])
+// 		i++;
+// 	return (i);
+// }
+
+// int	ft_rgb(int r, int g, int b)
+// {
+// 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+// 		return (-1);
+// 	return (r << 16 | g << 8 | b);
+// }

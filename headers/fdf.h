@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/22 15:07:13 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/22 15:17:02 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,15 @@ typedef struct s_data
 int				ft_init(t_data **data);
 
 // utils
-void			ft_lineset(t_line *line);
 void			ft_putpxl(t_img **img, int x, int y, uint32_t color);
 int				ft_set_n_paint_buffer(t_data *data, t_img **buffer);
 void			ft_put_buffer_to_window(t_data **data, t_img **current);
 
 // utils2
 int				ft_map_height(char *filename);
-size_t			ft_len(char **map_ln);
 int				ft_abs(float value);
-int				ft_rgb(int r, int g, int b);
 size_t			ft_wordcount(char *line);
+void			ft_lineset(t_line *line);
 
 // numbers
 long			ft_atol(char *s);
