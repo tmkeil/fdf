@@ -88,11 +88,6 @@ void	ft_print(t_point **map, t_map *v)
 
 void	ft_transform_points(t_data **data)
 {
-	float	phi1;
-	float	phi2;
-
-	phi1 = 35.264f * M_PI / 180;
-	phi2 = 35.264f * M_PI / 180;
 	ft_translate(data, WIDTH / 2, HEIGHT / 2, 0);
 	ft_rotate(data, 35.264f, ft_rotate_x);
 	ft_rotate(data, 45.0f, ft_rotate_y);
