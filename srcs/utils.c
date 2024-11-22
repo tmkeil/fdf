@@ -6,21 +6,23 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:50:10 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 21:45:06 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/22 14:31:06 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_set_current(t_data *data, t_img **current)
+void	ft_setbuffer(t_data *data, t_img **buffer)
 {
+	if (!data->img->buffer1 || !data->img->buffer2)
+		return ;
 	if (data->img->current == data->img->buffer1)
-		*current = data->img->buffer2;
+		*buffer = data->img->buffer2;
 	else
-		*current = data->img->buffer1;
+		*buffer = data->img->buffer1;
 }
 
-void	ft_arrangeline(t_line *line)
+void	ft_lineset(t_line *line)
 {
 	line->dx = ft_abs(line->p2->x - line->p1->x);
 	line->dy = -(ft_abs(line->p2->y - line->p1->y));
@@ -29,26 +31,25 @@ void	ft_arrangeline(t_line *line)
 	line->error = line->dx + line->dy;
 }
 
-void	ft_putpxl(t_img *img, int x, int y, int color)
+void	ft_putpxl(t_img **img, int x, int y, uint32_t color)
 {
 	int	offset;
 
 	if (x < 0 || y < 0 || x >= WIDTH || y >= HEIGHT)
 		return ;
-	offset = x * (img->bpp / 8) + y * img->linelen;
-	*(unsigned int *)(img->data + offset) = color;
+	if (!img || !*img || !(*img)->data)
+		return ;
+	offset = x * ((*img)->bpp / 8) + y * (*img)->linelen;
+	*(unsigned int *)((*img)->data + offset) = color;
 }
 
-void	ft_paint_buffer(t_img *buffer, int color)
+void	ft_paint_buffer(t_img **buffer, uint16_t color)
 {
 	int	i;
 	int	j;
 
-	if (!buffer || !buffer->img)
+	if (!buffer || !*buffer || !(*buffer)->data)
 		return ;
-	// buffer->img = mlx_new_image(mlx->mlx_ptr, WIDTH, HEIGHT);
-	// buffer->data = mlx_get_data_addr(buffer->img, &buffer->bpp,
-	// 		&buffer->linelen, &buffer->endian);
 	i = 0;
 	while (i < HEIGHT)
 	{
@@ -59,13 +60,11 @@ void	ft_paint_buffer(t_img *buffer, int color)
 	}
 }
 
-void	ft_put_buffer_to_window(t_data *data)
+void	ft_put_buffer_to_window(t_data **data, t_img **current)
 {
 	t_mlx	*mlx;
-	t_img	*current;
 
-	mlx = data->var;
-	current = data->img->current;
-	mlx_put_image_to_window(mlx->mlx_ptr, mlx->mlx_win, current->img, 0, 0);
-	data->img->current = current;
+	mlx = (*data)->var;
+	mlx_put_image_to_window(mlx->mlx_ptr, mlx->mlx_win, (*current)->img, 0, 0);
+	(*data)->img->current = *current;
 }

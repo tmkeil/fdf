@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 20:16:11 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 18:13:07 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/22 13:25:34 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	ft_len(char **map_ln)
 	return (i);
 }
 
-int	ft_abs(int value)
+int	ft_abs(float value)
 {
 	return ((((value) * ((value) >= 0)) - ((value) * ((value) < 0))));
 }

@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 21:36:59 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 18:13:25 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/22 13:20:36 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ long	ft_atol(char *s)
 	return (val * p);
 }
 
-long	ft_atol_base(const char *str, int str_base)
+uint32_t	ft_atol_base(const char *str, int str_base)
 {
 	int		i;
 	int		digit;

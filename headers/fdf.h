@@ -6,14 +6,14 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 21:44:39 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/22 14:37:25 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-# define WIDTH 200
-# define HEIGHT 1000
+# define WIDTH 1500
+# define HEIGHT 600
 # define BACKCOL 0xffffff
 # define PKTCOL 0x000000
 
@@ -49,28 +49,22 @@ typedef struct s_imgs
 
 typedef struct s_point
 {
-	int			x;
-	int			y;
-	int			z;
-	int			color;
+	float		x;
+	float		y;
+	float		z;
+	u_int32_t	color;
 }				t_point;
 
 typedef struct s_line
 {
 	t_point		*p1;
 	t_point		*p2;
-	int			dx;
-	int			dy;
-	int			sx;
-	int			sy;
-	int			error;
+	float		dx;
+	float		dy;
+	float		sx;
+	float		sy;
+	float		error;
 }				t_line;
-
-typedef struct s_wireframe
-{
-	int			num_lines;
-	t_line		*lines;
-}				t_wireframe;
 
 typedef struct s_map
 {
@@ -79,6 +73,13 @@ typedef struct s_map
 	int			*widths;
 	int			height;
 }				t_map;
+
+typedef struct s_wireframe
+{
+	int			num_lines;
+	t_line		*lines;
+	t_point		**transformed;
+}				t_wireframe;
 
 typedef struct s_data
 {
@@ -92,32 +93,37 @@ typedef struct s_data
 int				ft_init(t_data **data);
 
 // utils
-void			ft_arrangeline(t_line *line);
-void			ft_putpxl(t_img *img, int x, int y, int color);
-void			ft_set_current(t_data *data, t_img **current);
-void			ft_paint_buffer(t_img *img, int color);
-void			ft_put_buffer_to_window(t_data *data);
+void			ft_setbuffer(t_data *data, t_img **buffer);
+void			ft_lineset(t_line *line);
+void			ft_putpxl(t_img **img, int x, int y, uint32_t color);
+void			ft_paint_buffer(t_img **buffer, uint16_t color);
+void			ft_put_buffer_to_window(t_data **data, t_img **current);
 
 // utils2
 int				ft_map_height(char *filename);
 size_t			ft_len(char **map_ln);
-int				ft_abs(int value);
+int				ft_abs(float value);
 int				ft_rgb(int r, int g, int b);
 size_t			ft_wordcount(char *line);
 
 // numbers
 long			ft_atol(char *s);
-long			ft_atol_base(const char *str, int str_base);
+uint32_t		ft_atol_base(const char *str, int str_base);
 
 // parse
 int				ft_parsemap(t_data **data, char **argv);
 
 // clear
-void			ft_clearmap(t_map *map);
-void			ft_clrptr(void **ptr);
 void			ft_cleardata(t_data *data);
+void			ft_clrptr(void **ptr);
 
 // wireframe
-void			ft_drawline(t_data *data, t_line *line);
+int				ft_wireframe(t_data **data);
+
+// transformation
+void			ft_translate(t_data **data, float x, float y, float z);
+void			ft_rotate_x(t_data **data, float phi);
+void			ft_rotate_y(t_data **data, float phi);
+void			ft_rotate_z(t_data **data, float phi);
 
 #endif

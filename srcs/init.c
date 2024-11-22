@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 19:14:22 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/20 19:29:58 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/21 21:05:01 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 static int	ft_init_var(t_data **data)
 {
+	t_mlx	**mlx;
+
+	mlx = &(*data)->var;
 	(*data)->var = malloc(sizeof(t_mlx));
 	if (!(*data)->var)
 		return (0);
-	(*data)->var->mlx_ptr = mlx_init();
-	(*data)->var->mlx_win = mlx_new_window((*data)->var->mlx_ptr, WIDTH, HEIGHT,
-			"tkeil");
-	if (!(*data)->var->mlx_ptr || !(*data)->var->mlx_win)
+	(*mlx)->mlx_ptr = mlx_init();
+	(*mlx)->mlx_win = mlx_new_window((*mlx)->mlx_ptr, WIDTH, HEIGHT, "tkeil");
+	if (!(*mlx)->mlx_ptr || !(*mlx)->mlx_win)
 		return (0);
 	return (1);
 }
@@ -48,6 +50,8 @@ static int	ft_init_imgs(t_data **data)
 			&(*a)->endian);
 	(*b)->data = mlx_get_data_addr((*b)->img, &(*b)->bpp, &(*b)->linelen,
 			&(*b)->endian);
+	if (!(*a)->data || !(*b)->data)
+		return (0);
 	(*data)->img->current = (*a);
 	return (1);
 }
@@ -65,10 +69,10 @@ static int	ft_init_wireframe(t_data **data)
 	t_line		**lines;
 	t_wireframe	**wire;
 
-	(*data)->wirefr = malloc(sizeof(t_wireframe));
-	if (!(*data)->wirefr)
-		return (0);
 	wire = &(*data)->wirefr;
+	*wire = malloc(sizeof(t_wireframe));
+	if (!*wire)
+		return (0);
 	(*wire)->lines = malloc(sizeof(t_line));
 	if (!(*wire)->lines)
 		return (0);
