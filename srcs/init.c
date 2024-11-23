@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 19:14:22 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/22 16:11:03 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/23 16:09:39 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,25 @@ static int	ft_init_var(t_data **data)
 	(*mlx)->mlx_ptr = mlx_init();
 	(*mlx)->mlx_win = mlx_new_window((*mlx)->mlx_ptr, WIDTH, HEIGHT, "tkeil");
 	if (!(*mlx)->mlx_ptr || !(*mlx)->mlx_win)
+		return (0);
+	return (1);
+}
+
+static int	ft_init_map(t_data **data)
+{
+	(*data)->map = malloc(sizeof(t_map));
+	if (!(*data)->map)
+		return (0);
+	return (1);
+}
+
+static int	ft_init_wireframe(t_data **data)
+{
+	t_wireframe	**wire;
+
+	wire = &(*data)->wirefr;
+	*wire = malloc(sizeof(t_wireframe));
+	if (!*wire)
 		return (0);
 	return (1);
 }
@@ -53,25 +72,6 @@ static int	ft_init_imgs(t_data **data)
 	if (!(*a)->data || !(*b)->data)
 		return (0);
 	(*data)->img->current = (*a);
-	return (1);
-}
-
-static int	ft_init_map(t_data **data)
-{
-	(*data)->map = malloc(sizeof(t_map));
-	if (!(*data)->map)
-		return (0);
-	return (1);
-}
-
-static int	ft_init_wireframe(t_data **data)
-{
-	t_wireframe	**wire;
-
-	wire = &(*data)->wirefr;
-	*wire = malloc(sizeof(t_wireframe));
-	if (!*wire)
-		return (0);
 	return (1);
 }
 

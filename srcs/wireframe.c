@@ -6,31 +6,32 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:24:56 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/22 22:50:08 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/23 22:06:21 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_connect_points(t_data *data, t_img **buffer, int x, int y)
+void	ft_connect_points(t_data *data, t_img **buffer)
 {
 	t_point	**tp;
-	int		i;
-	int		j;
+	int		x;
+	int		y;
 
 	tp = data->wirefr->transformed;
-	i = 0;
-	while (i < data->map->height)
+	y = 0;
+	while (y < data->map->height)
 	{
-		j = 0;
-		while (j < data->map->widths[i])
+		x = 0;
+		while (x < data->map->widths[y])
 		{
-			if (j + 1 < data->map->widths[i])
-				ft_drawline(&tp[i][j], &tp[i][j + 1], buffer);
-                        if (j + 1 < data->map->height && i < data->map->widths[j + 1])
-				ft_drawline(&tp[i][j], &tp[i][j + 1], buffer);
+			if (x + 1 < data->map->widths[y])
+				ft_drawline(&tp[y][x], &tp[y][x + 1], buffer);
+			if (y + 1 < data->map->height && x < data->map->widths[y + 1])
+				ft_drawline(&tp[y][x], &tp[y + 1][x], buffer);
+			x++;
 		}
-		i++;
+		y++;
 	}
 }
 
@@ -63,33 +64,26 @@ int	ft_transfer_points(t_data **data)
 	return ((*data)->wirefr->transformed = tp, 1);
 }
 
-void	ft_print(t_point **map, t_map *v)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	printf("height of the map abc: %i\n", v->height);
-	while (i < v->height)
-	{
-		printf("Reihe %i. Width = %i\n", i + 1, v->widths[i]);
-		j = 0;
-		while (j < v->widths[i])
-		{
-			printf("x = %f, y = %f, z = %f\n", map[i][j].x, map[i][j].y, map[i][j].z);
-			printf("color = %i\n", map[i][j].color);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-}
-
 void	ft_transform_points(t_data **data)
 {
-	ft_translate(data, WIDTH / 2, HEIGHT / 2, 0);
-	ft_rotate(data, 35.264f, ft_rotate_x);
-	ft_rotate(data, 45.0f, ft_rotate_y);
+	int		i;
+	int		j;
+	t_point	**ordinates;
+
+	i = 0;
+	ordinates = (*data)->wirefr->transformed;
+	while (i < (*data)->map->height)
+	{
+		j = 0;
+		while (j < (*data)->map->widths[i])
+		{
+			ft_scale(&ordinates[i][j], 30);
+			ft_rotate(&ordinates[i][j], 30.0f, ft_project_isometric);
+			ft_translate(&ordinates[i][j], WIDTH / 2, HEIGHT / 2);
+			j++;
+		}
+		i++;
+	}
 }
 
 int	ft_wireframe(t_data **data)
@@ -99,13 +93,9 @@ int	ft_wireframe(t_data **data)
 	buffer = NULL;
 	if (!ft_transfer_points(data))
 		return (0);
-	// printf("b1\n");
 	ft_transform_points(data);
-		printf("\n");
-	ft_print((*data)->wirefr->transformed, (*data)->map);
-	printf("\n");
 	if (!ft_set_n_paint_buffer(*data, &buffer))
 		return (0);
-	ft_connect_points(*data, &buffer, 0, 0);
+	ft_connect_points(*data, &buffer);
 	return (ft_put_buffer_to_window(data, &buffer), 1);
 }

@@ -1,37 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   transformation.c                                   :+:      :+:    :+:   */
+/*   rotation_matrices.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 18:27:00 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/22 20:30:06 by tkeil            ###   ########.fr       */
+/*   Created: 2024/11/23 21:00:30 by tkeil             #+#    #+#             */
+/*   Updated: 2024/11/23 21:33:09 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_translate(t_data **data, float x, float y, float z)
+void	ft_project_isometric(t_point *point, float rad)
 {
-	int		i;
-	int		j;
-	t_point	**ordinates;
+	float	x;
+	float	y;
 
-	i = 0;
-	ordinates = (*data)->wirefr->transformed;
-	while (i < (*data)->map->height)
-	{
-		j = 0;
-		while (j < (*data)->map->widths[i])
-		{
-			ordinates[i][j].x += x;
-			ordinates[i][j].y += y;
-			ordinates[i][j].z += z;
-			j++;
-		}
-		i++;
-	}
+	x = point->x;
+	y = point->y;
+	point->x = x * cos(rad) - y * cos(rad);
+	point->y = x * sin(rad) + y * sin(rad) - point->z;
 }
 
 void	ft_rotate_x(t_point *point, float rad)
@@ -65,24 +54,4 @@ void	ft_rotate_z(t_point *point, float rad)
 	y = point->y;
 	point->x = x * cos(rad) - y * sin(rad);
 	point->y = x * sin(rad) + y * cos(rad);
-}
-
-void	ft_rotate(t_data **d, float p, void (*f)(t_point *, float))
-{
-	int		i;
-	int		j;
-	t_point	**ordinates;
-
-	i = 0;
-	ordinates = (*d)->wirefr->transformed;
-	while (i < (*d)->map->height)
-	{
-		j = 0;
-		while (j < (*d)->map->widths[i])
-		{
-			f(&ordinates[i][j], p * M_PI / 180);
-			j++;
-		}
-		i++;
-	}
 }

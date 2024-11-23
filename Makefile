@@ -22,7 +22,7 @@ HEADERSDIR = headers
 SRCSDIR = srcs
 OBJSDIR = objs
 
-SRCS = main.c utils.c utils2.c clear.c init.c parse.c numbers.c transformation.c wireframe.c
+SRCS = main.c utils.c utils2.c clear.c init.c parse.c numbers.c wireframe.c transformations.c rotation_matrices.c 
 SRCSS = $(addprefix $(SRCSDIR)/, $(SRCS))
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))
 
@@ -46,8 +46,7 @@ $(OBJSDIR)/%.o: $(SRCSDIR)/%.c | $(OBJSDIR)
 	@echo "Compiling $< -> $@"
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-re:
-	fclean all
+re: fclean all
 
 clean:
 	rm -rf $(OBJSDIR)
