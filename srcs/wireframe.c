@@ -16,23 +16,22 @@ void	ft_connect_points(t_data *data, t_img **buffer, int x, int y)
 {
 	t_point	**tp;
 	int		i;
+	int		j;
 
 	tp = data->wirefr->transformed;
-	if (y >= data->map->height || x >= data->map->widths[y])
-		return ;
 	i = 0;
-	while (i < data->map->widths[0] - 10)
+	while (i < data->map->height)
 	{
-		printf("draw line from x = %f, y = %f, z = %f\n", tp[x + i][y].x, tp[x + i][y].y, tp[x + i][y].z);
-		printf("to x = %f, y = %f, z = %f\n", tp[x + (i + 1)][y].x, tp[x + (i + 1)][y].y, tp[x + (i + 1)][y].z);
-		printf("test\n");
-		ft_drawline(&tp[0][x + i], &tp[0][x + (i + 1)], buffer);
+		j = 0;
+		while (j < data->map->widths[i])
+		{
+			if (j + 1 < data->map->widths[i])
+				ft_drawline(&tp[i][j], &tp[i][j + 1], buffer);
+                        if (j + 1 < data->map->height && i < data->map->widths[j + 1])
+				ft_drawline(&tp[i][j], &tp[i][j + 1], buffer);
+		}
 		i++;
 	}
-	// ft_connect_points();
-	// ft_connect_points();
-	// ft_connect_points();
-	// ft_connect_points();
 }
 
 int	ft_transfer_points(t_data **data)
