@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:50:10 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/23 21:58:02 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/23 22:46:00 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,6 @@ void	ft_drawline(t_point *p1, t_point *p2, t_img **buffer)
 		if (current.x == p2->x && current.y == p2->y)
 			break ;
 		ft_update_current(&current.x, &current.y, &line);
-		// ft_interpol_color(p1, p2, current);
+		current.color = ft_interpol_color(p1, p2, current);
 	}
 }

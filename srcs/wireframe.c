@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:24:56 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/23 22:06:21 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/23 22:50:06 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int	ft_transfer_points(t_data **data)
 			return (0);
 		while (j < (*data)->map->widths[i])
 		{
-			tp[i][j].x = (float)j;
-			tp[i][j].y = (float)i;
-			tp[i][j].z = (float)(*data)->map->profile[i][j];
+			tp[i][j].x = j;
+			tp[i][j].y = i;
+			tp[i][j].z = (*data)->map->profile[i][j];
 			tp[i][j].color = (*data)->map->colors[i][j];
 			j++;
 		}
@@ -77,7 +77,7 @@ void	ft_transform_points(t_data **data)
 		j = 0;
 		while (j < (*data)->map->widths[i])
 		{
-			ft_scale(&ordinates[i][j], 30);
+			ft_scale(&ordinates[i][j], 25);
 			ft_rotate(&ordinates[i][j], 30.0f, ft_project_isometric);
 			ft_translate(&ordinates[i][j], WIDTH / 2, HEIGHT / 2);
 			j++;

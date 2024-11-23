@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/23 22:02:38 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/23 22:49:08 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void			ft_drawline(t_point *p1, t_point *p2, t_img **buffer);
 size_t			ft_wordcount(char *line);
 int				ft_map_height(char *filename);
 void			ft_set_line(t_line_vars *line, t_point *p1, t_point *p2);
+uint32_t		ft_interpol_color(t_point *p1, t_point *p2, t_point current);
 
 // numbers
 long			ft_atol(char *s);

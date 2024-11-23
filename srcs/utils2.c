@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 20:16:11 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/23 21:53:19 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/23 22:48:21 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,20 @@ void	ft_set_line(t_line_vars *line, t_point *p1, t_point *p2)
 	line->sx = (p1->x < p2->x) - (p1->x >= p2->x);
 	line->sy = (p1->y < p2->y) - (p1->y >= p2->y);
 	line->error = line->dx + line->dy;
+}
+
+uint32_t	ft_interpol_color(t_point *p1, t_point *p2, t_point current)
+{
+	uint32_t	c1;
+	uint32_t	c2;
+	float		big;
+	float		small;
+
+	c1 = p1->color;
+	c2 = p2->color;
+	big = sqrtf(powf(p2->x - p1->x, 2) + powf(p2->y - p1->y, 2));
+	small = sqrtf(powf(current.x - p1->x, 2) + powf(current.y - p1->y, 2));
+	if (big == 0.0f)
+		return (c1);
+	return ((uint32_t)(c1 + (c2 - c1) * (small / big)));
 }
