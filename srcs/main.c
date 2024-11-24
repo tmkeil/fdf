@@ -6,49 +6,92 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:50:50 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/23 16:35:03 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/25 00:52:07 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-// void	ft_linealloc(t_line **line)
-// {
-// 	(*line) = malloc(sizeof(t_line));
-// 	if (!*line)
-// 		return ;
-// 	(*line)->p1 = malloc(sizeof(t_point));
-// 	(*line)->p2 = malloc(sizeof(t_point));
-// 	if (!(*line)->p1 || !(*line)->p2)
-// 		return ;
-// 	(*line)->p1->color = PKTCOL;
-// 	(*line)->p2->color = PKTCOL;
-// 	(*line)->p1->x = 500;
-// 	(*line)->p2->x = 500;
-// 	(*line)->p1->y = 20;
-// 	(*line)->p2->y = 600;
-// }
+int	destroy(t_data *data)
+{
+	if (data)
+	{
+		mlx_destroy_image(data->var->mlx_ptr, data->img->current->img);
+		mlx_destroy_window(data->var->mlx_ptr, data->var->mlx_win);
+		// mlx_destroy_display(data->var->mlx_ptr);
+	}
+	return (0);
+}
 
-// void	ft_print(t_map *map)
-// {
-// 	int	i;
-// 	int	j;
+int	mouseclick_down(int button, int x, int y, void *param)
+{
+	t_data	*data;
 
-// 	i = 0;
-// 	printf("height of the map: %i\n", map->height);
-// 	while (i < map->height)
-// 	{
-// 		printf("Reihe %i. Width = %i\n", i + 1, map->widths[i]);
-// 		j = 0;
-// 		while (j < map->widths[i])
-// 		{
-// 			printf("x = %i, z = %i\n", j, map->profile[i][j]);
-// 			printf("color = %i\n", map->colors[i][j]);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
+	data = (t_data *)param;
+	if (button == 5)
+		ft_zoom_out(&data, &data->wirefr);
+	else if (button == 4)
+		ft_zoom_in(&data, &data->wirefr);
+	if (button == 1)
+	{
+		data->mouse.mouse_down = 1;
+		data->mouse.mouse_x = x;
+		data->mouse.mouse_y = y;
+	}
+	return (0);
+}
+
+int	mouseclick_up(int button, int x, int y, void *param)
+{
+	t_data	*data;
+
+	data = (t_data *)param;
+	if (button == 1)
+		data->mouse.mouse_down = 0;
+	return (0);
+}
+
+int	mousemove(int x, int y, void *param)
+{
+	t_data	*data;
+
+	data = (t_data *)param;
+	if (data->mouse.mouse_down)
+	{
+		if (x > data->mouse.mouse_x)
+		{
+			ft_move_right(&data, &data->wirefr);
+			data->mouse.mouse_x = x;
+		}
+		else if (x < data->mouse.mouse_x)
+		{
+			ft_move_left(&data, &data->wirefr);
+			data->mouse.mouse_y = y;
+		}
+		if (x > data->mouse.mouse_x)
+		{
+			ft_move_up(&data, &data->wirefr);
+			data->mouse.mouse_x = x;
+		}
+		else if (x < data->mouse.mouse_x)
+		{
+			ft_move_down(&data, &data->wirefr);
+			data->mouse.mouse_y = y;
+		}
+	}
+	return (0);
+}
+
+int	keyup(int key, void *param)
+{
+	t_data	*data;
+
+	data = (t_data *)param;
+	if (key == ESC || !data)
+		destroy(data);
+	printf("keyup: %i\n", key);
+	return (0);
+}
 
 int	main(int argc, char *argv[])
 {
@@ -61,12 +104,15 @@ int	main(int argc, char *argv[])
 		return (1);
 	if (!ft_init(&data))
 		return (1);
-	printf("width = %i\nwidth * 4 = %i\nlinelen = %i\n", WIDTH, 4 * WIDTH,
-		data->img->current->linelen);
 	if (!ft_parsemap(&data, argv))
 		return (ft_cleardata(data), 1);
-	if (!ft_wireframe(&data))
-		return (printf("abcdefgh\n"), ft_cleardata(data), 1);
+	if (!ft_wire(&data))
+		return (ft_cleardata(data), 1);
+	mlx_hook(data->var->mlx_win, 17, 0, destroy, data);
+	mlx_hook(data->var->mlx_win, 4, 0, mouseclick_down, data);
+	mlx_hook(data->var->mlx_win, 5, 0, mouseclick_up, data);
+	mlx_hook(data->var->mlx_win, 6, 0, mousemove, data);
+	mlx_hook(data->var->mlx_win, 3, 0, keyup, data);
 	mlx_loop(data->var->mlx_ptr);
 	return (ft_cleardata(data), 0);
 }

@@ -6,11 +6,30 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:24:56 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/23 22:50:06 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/24 23:30:57 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	ft_drawline(t_point *p1, t_point *p2, t_img **buffer)
+{
+	t_point		current;
+	t_line_vars	line;
+
+	current.x = p1->x;
+	current.y = p1->y;
+	current.color = p1->color;
+	ft_set_line(&line, p1, p2);
+	while (1)
+	{
+		ft_putpxl(buffer, current.x, current.y, current.color);
+		if (current.x == p2->x && current.y == p2->y)
+			break ;
+		ft_update_current(&current.x, &current.y, &line);
+		current.color = ft_interpol_color(p1, p2, current);
+	}
+}
 
 void	ft_connect_points(t_data *data, t_img **buffer)
 {
@@ -20,80 +39,59 @@ void	ft_connect_points(t_data *data, t_img **buffer)
 
 	tp = data->wirefr->transformed;
 	y = 0;
-	while (y < data->map->height)
+	while (y < data->wirefr->height)
 	{
 		x = 0;
-		while (x < data->map->widths[y])
+		while (x < data->wirefr->widths[y])
 		{
-			if (x + 1 < data->map->widths[y])
+			if (x + 1 < data->wirefr->widths[y])
 				ft_drawline(&tp[y][x], &tp[y][x + 1], buffer);
-			if (y + 1 < data->map->height && x < data->map->widths[y + 1])
+			if (y + 1 < data->wirefr->height && x < data->wirefr->widths[y + 1])
 				ft_drawline(&tp[y][x], &tp[y + 1][x], buffer);
+			
 			x++;
 		}
 		y++;
 	}
 }
 
-int	ft_transfer_points(t_data **data)
+void	ft_transform_points(t_wire **wire)
 {
 	int		i;
 	int		j;
-	t_point	**tp;
-
-	tp = malloc(sizeof(t_point *) * (*data)->map->height);
-	if (!tp)
-		return (0);
-	i = 0;
-	while (i < (*data)->map->height)
-	{
-		j = 0;
-		tp[i] = malloc(sizeof(t_point) * (*data)->map->widths[i]);
-		if (!tp[i])
-			return (0);
-		while (j < (*data)->map->widths[i])
-		{
-			tp[i][j].x = j;
-			tp[i][j].y = i;
-			tp[i][j].z = (*data)->map->profile[i][j];
-			tp[i][j].color = (*data)->map->colors[i][j];
-			j++;
-		}
-		i++;
-	}
-	return ((*data)->wirefr->transformed = tp, 1);
-}
-
-void	ft_transform_points(t_data **data)
-{
-	int		i;
-	int		j;
-	t_point	**ordinates;
+	t_point	**p;
 
 	i = 0;
-	ordinates = (*data)->wirefr->transformed;
-	while (i < (*data)->map->height)
+	p = (*wire)->transformed;
+	while (i < (*wire)->height)
 	{
 		j = 0;
-		while (j < (*data)->map->widths[i])
+		while (j < (*wire)->widths[i])
 		{
-			ft_scale(&ordinates[i][j], 25);
-			ft_rotate(&ordinates[i][j], 30.0f, ft_project_isometric);
-			ft_translate(&ordinates[i][j], WIDTH / 2, HEIGHT / 2);
+			ft_translate(&p[i][j], -(*wire)->max_w, -(*wire)->height);
+			ft_scale(*wire, &p[i][j], 0.5, 400);
+			ft_rotate(&p[i][j], 30.0f, ft_project_isometric);
+			ft_rotate(&p[i][j], 90.0f, ft_rotate_y);
+			ft_rotate(&p[i][j], -90.0f, ft_rotate_z);
+			ft_rotate(&p[i][j], -240.0f, ft_rotate_y);
+			// ft_rotate(&p[i][j], -90.0f, ft_rotate_x);
+			// ft_rotate(&p[i][j], 45.0f, ft_rotate_y);
+			// // ft_rotate(&p[i][j], 160.0f, ft_rotate_y);
+			// ft_rotate(&p[i][j], 30.0f, ft_rotate_x);
+			// ft_rotate(&p[i][j], 45.0f, ft_rotate_y);
+			ft_translate(&p[i][j], WIDTH, HEIGHT);
 			j++;
 		}
 		i++;
 	}
 }
 
-int	ft_wireframe(t_data **data)
+int	ft_wire(t_data **data)
 {
 	t_img	*buffer;
 
 	buffer = NULL;
-	if (!ft_transfer_points(data))
-		return (0);
-	ft_transform_points(data);
+	ft_transform_points(&(*data)->wirefr);
 	if (!ft_set_n_paint_buffer(*data, &buffer))
 		return (0);
 	ft_connect_points(*data, &buffer);

@@ -6,49 +6,50 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:58:12 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/22 16:46:50 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/24 20:09:05 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	ft_map_profil(t_map **map, char **split, int i, int j)
+int	ft_matrix(t_wire **wire, char **split, int i, int j)
 {
 	long	val;
 
 	val = ft_atol(split[0]);
 	if (val > INT_MAX || val < INT_MIN)
 		return (0);
-	(*map)->profile[i][j] = (int)val;
+	(*wire)->transformed[i][j].x = j;
+	(*wire)->transformed[i][j].y = i;
+	(*wire)->transformed[i][j].z = (int)val;
 	return (1);
 }
 
-int	ft_map_cls(t_map **map, char **split, int i, int j)
+int	ft_colors(t_wire **wire, char **split, int i, int j)
 {
 	long	val;
 
 	if (!split[1])
-		(*map)->colors[i][j] = PKTCOL;
+		(*wire)->transformed[i][j].color = (uint32_t)PKTCOL;
 	else
 	{
 		val = ft_atol_base(split[1], 16);
 		if (val > UINT32_MAX || val < 0)
 			return (0);
-		(*map)->colors[i][j] = (int)val;
+		(*wire)->transformed[i][j].color = (uint32_t)val;
 	}
 	return (1);
 }
 
-int	ft_map_matrix(t_map **map, char *line, int i)
+int	ft_map_matrix(t_wire **wire, char *line, int i)
 {
 	int		j;
 	char	**split;
 	char	**split2;
 
 	split = ft_split(line, ' ');
-	(*map)->profile[i] = malloc(sizeof(int) * (*map)->widths[i]);
-	(*map)->colors[i] = malloc(sizeof(int) * (*map)->widths[i]);
-	if (!split || !(*map)->profile[i] || !(*map)->colors[i])
+	(*wire)->transformed[i] = malloc(sizeof(t_point) * (*wire)->widths[i]);
+	if (!split || !(*wire)->transformed[i])
 		return (ft_clrptr((void **) split), 0);
 	j = 0;
 	while (split[j])
@@ -56,7 +57,7 @@ int	ft_map_matrix(t_map **map, char *line, int i)
 		split2 = ft_split(split[j], ',');
 		if (!split2)
 			return (ft_clrptr((void **) split), 0);
-		if (!ft_map_profil(map, split2, i, j) || !ft_map_cls(map, split2, i, j))
+		if (!ft_matrix(wire, split2, i, j) || !ft_colors(wire, split2, i, j))
 			return (ft_clrptr((void **) split), ft_clrptr((void **) split2), 0);
 		ft_clrptr((void **) split2);
 		j++;
@@ -65,18 +66,17 @@ int	ft_map_matrix(t_map **map, char *line, int i)
 	return (1);
 }
 
-int	ft_init_map(t_map **map, int fd, char *filename)
+int	ft_init_map(t_wire **wire, int fd, char *filename)
 {
 	int		height;
 	char	*line;
 	int		i;
 
 	height = ft_map_height(filename);
-	(*map)->height = height;
-	(*map)->widths = malloc(sizeof(int) * height);
-	(*map)->profile = malloc(sizeof(int *) * height);
-	(*map)->colors = malloc(sizeof(int *) * height);
-	if (!(*map)->widths || !(*map)->profile || !(*map)->colors)
+	(*wire)->height = height;
+	(*wire)->widths = malloc(sizeof(int) * height);
+	(*wire)->transformed = malloc(sizeof(t_point *) * height);
+	if (!(*wire)->widths || !(*wire)->transformed)
 		return (0);
 	i = 0;
 	while (1)
@@ -84,10 +84,12 @@ int	ft_init_map(t_map **map, int fd, char *filename)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		(*map)->widths[i] = ft_wordcount(line);
-		if (!ft_map_matrix(map, line, i++))
+		(*wire)->widths[i] = ft_wordcount(line);
+		if (!ft_map_matrix(wire, line, i))
 			return (free(line), 0);
+		i++;
 	}
+	ft_set_max_width(*wire);
 	return (free(line), 1);
 }
 
@@ -95,14 +97,14 @@ int	ft_parsemap(t_data **data, char **argv)
 {
 	int		fd;
 	char	*filename;
-	t_map	*map;
+	t_wire	*wire;
 
-	map = (*data)->map;
+	wire = (*data)->wirefr;
 	filename = argv[1];
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (perror("Error opening file"), 0);
-	if (!ft_init_map(&map, fd, filename))
+	if (!ft_init_map(&wire, fd, filename))
 		return (close(fd), 0);
 	return (close(fd), 1);
 }

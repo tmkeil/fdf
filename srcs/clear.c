@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:13:32 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/23 16:37:53 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/24 15:07:39 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_clrptr(void **ptr)
 // 	free(img);
 // }
 
-// static void	ft_clear_lines(t_wireframe *wirefr)
+// static void	ft_clear_lines(t_wire *wirefr)
 // {
 // 	int	i;
 

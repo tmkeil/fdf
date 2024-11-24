@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 19:14:22 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/23 16:09:39 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/24 15:16:47 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,12 @@ static int	ft_init_var(t_data **data)
 	return (1);
 }
 
-static int	ft_init_map(t_data **data)
+static int	ft_init_wire(t_data **data)
 {
-	(*data)->map = malloc(sizeof(t_map));
-	if (!(*data)->map)
-		return (0);
-	return (1);
-}
-
-static int	ft_init_wireframe(t_data **data)
-{
-	t_wireframe	**wire;
+	t_wire	**wire;
 
 	wire = &(*data)->wirefr;
-	*wire = malloc(sizeof(t_wireframe));
+	*wire = malloc(sizeof(t_wire));
 	if (!*wire)
 		return (0);
 	return (1);
@@ -84,9 +76,7 @@ int	ft_init(t_data **data)
 		return (ft_cleardata(*data), 0);
 	if (!ft_init_imgs(data))
 		return (ft_cleardata(*data), 0);
-	if (!ft_init_map(data))
-		return (ft_cleardata(*data), 0);
-	if (!ft_init_wireframe(data))
+	if (!ft_init_wire(data))
 		return (ft_cleardata(*data), 0);
 	return (1);
 }
