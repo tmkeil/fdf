@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/25 00:46:24 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/25 03:21:33 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdint.h>
+
 
 typedef struct s_mlx
 {
@@ -63,7 +65,7 @@ typedef struct s_point
 	int			x;
 	int			y;
 	int			z;
-	u_int32_t	color;
+	uint32_t	color;
 }				t_point;
 
 typedef struct s_wire

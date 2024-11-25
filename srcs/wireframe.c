@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wireframe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:24:56 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/24 23:30:57 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/25 05:45:08 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ void	ft_transform_points(t_wire **wire)
 			ft_translate(&p[i][j], -(*wire)->max_w, -(*wire)->height);
 			ft_scale(*wire, &p[i][j], 0.5, 400);
 			ft_rotate(&p[i][j], 30.0f, ft_project_isometric);
-			ft_rotate(&p[i][j], 90.0f, ft_rotate_y);
-			ft_rotate(&p[i][j], -90.0f, ft_rotate_z);
-			ft_rotate(&p[i][j], -240.0f, ft_rotate_y);
+			// ft_rotate(&p[i][j], 90.0f, ft_rotate_y);
+			// ft_rotate(&p[i][j], -90.0f, ft_rotate_z);
+			// ft_rotate(&p[i][j], -240.0f, ft_rotate_y);
 			// ft_rotate(&p[i][j], -90.0f, ft_rotate_x);
 			// ft_rotate(&p[i][j], 45.0f, ft_rotate_y);
 			// // ft_rotate(&p[i][j], 160.0f, ft_rotate_y);
