@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/25 03:21:33 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/25 13:08:37 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ typedef struct s_wire
 	int			*widths;
 	int			height;
 	int			max_w;
+	int			max_h;
+	float		auto_scale;
 }				t_wire;
 
 typedef struct s_mouse
@@ -110,6 +112,7 @@ void			ft_put_buffer_to_window(t_data **data, t_img **current);
 void			ft_drawline(t_point *p1, t_point *p2, t_img **buffer);
 void			ft_set_max_width(t_wire *wire);
 void			ft_update_current(int *cur_x, int *cur_y, t_line_vars *line);
+void			ft_set_max_height(t_wire *wire);
 
 // utils2
 size_t			ft_wordcount(char *line);
@@ -132,7 +135,7 @@ void			ft_clrptr(void **ptr);
 int				ft_wire(t_data **data);
 
 // transformation
-void			ft_scale(t_wire *wire, t_point *point, float fac, int pad);
+void			ft_scale(t_wire **wire, float fac, int pad);
 void			ft_translate(t_point *point, float x, float y);
 void			ft_rotate(t_point *p, float w, void (*f)(t_point *, float));
 

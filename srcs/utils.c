@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:50:10 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/24 18:48:19 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/25 12:45:15 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,30 @@ void	ft_set_max_width(t_wire *wire)
 		i++;
 	}
 	wire->max_w = max - min;
+}
+
+void	ft_set_max_height(t_wire *wire)
+{
+	int	i;
+	int	j;
+	int	min;
+	int	max;
+
+	i = 0;
+	max = 0;
+	min = INT_MAX;
+	while (i < wire->height)
+	{
+		j = 0;
+		while (j < wire->widths[i])
+		{
+			if (wire->transformed[i][j].y <= min)
+				min = wire->transformed[i][j].y;
+			if (wire->transformed[i][j].y >= max)
+				max = wire->transformed[i][j].y;
+			j++;
+		}
+		i++;
+	}
+	wire->max_h = max - min;
 }

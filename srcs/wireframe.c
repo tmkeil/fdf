@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wireframe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:24:56 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/25 05:45:08 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/26 02:06:15 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,30 @@ void	ft_connect_points(t_data *data, t_img **buffer)
 	}
 }
 
+// void	ft_transform_points(t_wire **wire)
+// {
+// 	int		i;
+// 	int		j;
+// 	t_point	**p;
+
+// 	i = 0;
+// 	p = (*wire)->transformed;
+// 	while (i < (*wire)->height)
+// 	{
+// 		j = 0;
+// 		while (j < (*wire)->widths[i])
+// 		{
+// 			ft_scale(*wire, &p[i][j], 0.5, 400);
+// 			ft_translate(&p[i][j], -(*wire)->max_w, -(*wire)->height);
+			
+// 			ft_rotate(&p[i][j], 30.0f, ft_project_isometric);
+// 			ft_translate(&p[i][j], WIDTH, HEIGHT);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
+
 void	ft_transform_points(t_wire **wire)
 {
 	int		i;
@@ -63,23 +87,15 @@ void	ft_transform_points(t_wire **wire)
 
 	i = 0;
 	p = (*wire)->transformed;
+	ft_scale(*wire, 0.5, 400);
 	while (i < (*wire)->height)
 	{
 		j = 0;
 		while (j < (*wire)->widths[i])
 		{
-			ft_translate(&p[i][j], -(*wire)->max_w, -(*wire)->height);
-			ft_scale(*wire, &p[i][j], 0.5, 400);
+			ft_translate(&p[i][j], -(*wire)->max_w / 2, -(*wire)->max_h / 2);
 			ft_rotate(&p[i][j], 30.0f, ft_project_isometric);
-			// ft_rotate(&p[i][j], 90.0f, ft_rotate_y);
-			// ft_rotate(&p[i][j], -90.0f, ft_rotate_z);
-			// ft_rotate(&p[i][j], -240.0f, ft_rotate_y);
-			// ft_rotate(&p[i][j], -90.0f, ft_rotate_x);
-			// ft_rotate(&p[i][j], 45.0f, ft_rotate_y);
-			// // ft_rotate(&p[i][j], 160.0f, ft_rotate_y);
-			// ft_rotate(&p[i][j], 30.0f, ft_rotate_x);
-			// ft_rotate(&p[i][j], 45.0f, ft_rotate_y);
-			ft_translate(&p[i][j], WIDTH, HEIGHT);
+			ft_translate(&p[i][j], WIDTH / 2, HEIGHT / 2);
 			j++;
 		}
 		i++;
