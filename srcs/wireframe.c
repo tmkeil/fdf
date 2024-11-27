@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:24:56 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/27 12:56:48 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/27 13:16:42 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,12 @@ void	ft_transform_points(t_wire **wire)
 		j = 0;
 		while (j < (*wire)->widths[i])
 		{
-			ft_translate(&p[i][j], -(*wire)->max_w / 2, -(*wire)->max_h / 2);
+			ft_translate(&p[i][j], -(*wire)->max_w / 2, -(*wire)->height / 2);
 			ft_rotate(&p[i][j], 30.0f, ft_project_isometric);
-			ft_translate(&p[i][j], WIDTH / 4, HEIGHT / 4);
+			ft_avg_height(wire);
+			ft_avg_width(wire);
+			ft_translate(&p[i][j], (*wire)->max_w / 2, (*wire)->height / 2);
+			ft_translate(&p[i][j], (*wire)->avg_width / 2, (*wire)->avg_height/ 2);
 			j++;
 		}
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/25 13:08:37 by tobke            ###   ########.fr       */
+/*   Updated: 2024/11/27 13:14:03 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ typedef struct s_imgs
 
 typedef struct s_point
 {
-	int			x;
-	int			y;
-	int			z;
+	float		x;
+	float		y;
+	float		z;
 	uint32_t	color;
 }				t_point;
 
@@ -73,9 +73,11 @@ typedef struct s_wire
 	t_point		**transformed;
 	int			*widths;
 	int			height;
-	int			max_w;
-	int			max_h;
+	float		max_w;
+	float		max_h;
 	float		auto_scale;
+	double		avg_width;
+	double		avg_height;
 }				t_wire;
 
 typedef struct s_mouse
@@ -95,11 +97,11 @@ typedef struct s_data
 
 typedef struct s_line_vars
 {
-	int			dx;
-	int			dy;
-	int			sx;
-	int			sy;
-	int			error;
+	float		dx;
+	float		dy;
+	float		sx;
+	float		sy;
+	float		error;
 }				t_line_vars;
 
 // init
@@ -111,7 +113,7 @@ int				ft_set_n_paint_buffer(t_data *data, t_img **buffer);
 void			ft_put_buffer_to_window(t_data **data, t_img **current);
 void			ft_drawline(t_point *p1, t_point *p2, t_img **buffer);
 void			ft_set_max_width(t_wire *wire);
-void			ft_update_current(int *cur_x, int *cur_y, t_line_vars *line);
+void			ft_update_current(float *cur_x, float *cur_y, t_line_vars *line);
 void			ft_set_max_height(t_wire *wire);
 
 // utils2
@@ -152,5 +154,8 @@ void			ft_zoom_in(t_data **data, t_wire **wire);
 
 void			ft_transform_points(t_wire **wire);
 void			ft_connect_points(t_data *data, t_img **buffer);
+
+void			ft_avg_width(t_wire **wire);
+void			ft_avg_height(t_wire **wire)
 
 #endif

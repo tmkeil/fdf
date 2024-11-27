@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transformations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:27:00 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/26 02:05:56 by tobke            ###   ########.fr       */
+/*   Updated: 2024/11/27 13:14:41 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,6 @@ void	ft_scale(t_wire **wire, float fac, int pad)
 		}
 		i++;
 	}
-	ft_set_max_height(*wire);
-	ft_set_max_width(*wire);
+	// ft_set_max_height(*wire);
+	// ft_set_max_width(*wire);
 }
