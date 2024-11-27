@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:50:10 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/27 13:13:24 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/27 13:21:04 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	ft_put_buffer_to_window(t_data **data, t_img **current)
 	(*data)->img->current = *current;
 }
 
-void	ft_update_current(int *cur_x, int *cur_y, t_line_vars *line)
+void	ft_update_current(float *cur_x, float *cur_y, t_line_vars *line)
 {
-	int	e;
+	float	e;
 
 	e = 2 * line->error;
 	if (e >= line->dy)
