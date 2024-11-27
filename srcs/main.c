@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:50:50 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/27 12:25:19 by tobke            ###   ########.fr       */
+/*   Updated: 2024/11/27 12:54:38 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	mouseclick_up(int button, int x, int y, void *param)
 {
 	t_data	*data;
 
+	(void) x;
+	(void) y;
 	data = (t_data *)param;
 	if (button == 1)
 		data->mouse.mouse_down = 0;
