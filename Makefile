@@ -27,7 +27,8 @@ HEADERSDIR = headers
 SRCSDIR = srcs
 OBJSDIR = objs
 
-SRCS = main.c utils.c utils2.c clear.c init.c parse.c numbers.c wireframe.c transformations.c rotation_matrices.c scrollzoom.c
+SRCS = main.c utils.c utils2.c clear.c init.c parse.c numbers.c wireframe.c transformations.c rotation_matrices.c \
+		scrollzoom_bonus.c handlemouse_bonus.c translate_bonus.c
 SRCSS = $(addprefix $(SRCSDIR)/, $(SRCS))
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))
 

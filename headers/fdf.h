@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/28 01:35:48 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/28 03:20:23 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,9 @@
 # define ESC 53
 
 # define UP 126
-# define DOWN 125
 # define LEFT 123
 # define RIGHT 124
 # define W 13
-# define S 1
 # define A 0
 # define D 2
 
@@ -33,10 +31,9 @@
 # include <fcntl.h>
 # include <math.h>
 # include <stdbool.h>
+# include <stdint.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <stdint.h>
-
 
 typedef struct s_mlx
 {
@@ -116,7 +113,8 @@ void			ft_set_max_width(t_wire *wire);
 // utils2
 size_t			ft_wordcount(char *line);
 int				ft_map_height(char *filename);
-void			ft_set_line(t_line_vars *line, t_point *p1, t_point *p2, int *len);
+void			ft_set_line(t_line_vars *line, t_point *p1, t_point *p2,
+					int *len);
 uint32_t		ft_interpol_color(t_point *p1, t_point *p2, int small, int big);
 
 // numbers
@@ -136,7 +134,7 @@ int				ft_wire(t_data **data);
 // transformation
 void			ft_scale(t_wire **wire, float fac, float pad);
 void			ft_translate(t_point *point, float x, float y);
-void			ft_rotate(t_point *p, float w, void (*f)(t_point *, float));
+void			ft_rotate(t_wire **a, float w, void (*f)(t_point *, float));
 
 // rotation matrices
 void			ft_project_isometric(t_point *point, float rad);
@@ -153,5 +151,14 @@ void			ft_connect_points(t_data *data, t_img **buffer);
 
 void			ft_avg_width(t_wire **wire);
 void			ft_avg_height(t_wire **wire);
+
+// event handling bonus
+int				destroy(t_data *data);
+int				mouseclick_down(int button, int x, int y, void *param);
+int				mouseclick_up(int button, int x, int y, void *param);
+int				mousemove(int x, int y, void *param);
+int				keyup(int key, void *param);
+void			ft_draw_new(t_data **data);
+void			ft_move(t_data **data, int val, int dir);
 
 #endif

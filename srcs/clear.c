@@ -6,84 +6,74 @@
 /*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:13:32 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/25 03:53:48 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/28 03:46:10 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_clrptr(void **ptr)
+void	ft_clear_images(t_imgs *imgs)
+{
+	if (imgs)
+	{
+		if (imgs->current)
+		{
+			if (imgs->current->data)
+				free(imgs->current->data);
+			free(imgs->current);
+		}
+		if (imgs->buffer1)
+		{
+			if (imgs->buffer1->data)
+				free(imgs->buffer1->data);
+			free(imgs->buffer1);
+		}
+		if (imgs->buffer2)
+		{
+			if (imgs->buffer2->data)
+				free(imgs->buffer2->data);
+			free(imgs->buffer2);
+		}
+		free(imgs);
+	}
+}
+
+void	ft_clear_wireframe(t_wire *wirefr)
 {
 	int	i;
 
-	if (!ptr)
-		return ;
 	i = 0;
-	while (ptr[i])
-		free(ptr[i++]);
-	free(ptr);
+	if (wirefr)
+	{
+		if (wirefr->transformed)
+		{
+			while (i < wirefr->height)
+				free(wirefr->transformed[i++]);
+			free(wirefr->transformed);
+		}
+		if (wirefr->widths)
+			free(wirefr->widths);
+		free(wirefr);
+	}
 }
 
-// void	ft_clearmap(t_map *map)
-// {
-// 	if (!map)
-// 		return ;
-// 	if (map->profile)
-// 		ft_clrptr((void **)map->profile);
-// 	if (map->colors)
-// 		ft_clrptr((void **)map->colors);
-// 	if (map->widths)
-// 		free(map->widths);
-// 	free(map);
-// }
-
-// static void	ft_clear_images(t_imgs *img)
-// {
-// 	if (!img)
-// 		return ;
-// 	if (img->current)
-// 	{
-// 		ft_clrptr((void **)img->current->data);
-// 		free(img->current);
-// 	}
-// 	if (img->buffer1)
-// 	{
-// 		ft_clrptr((void **)img->buffer1->data);
-// 		free(img->buffer1);
-// 	}
-// 	if (img->buffer2)
-// 	{
-// 		ft_clrptr((void **)img->buffer2->data);
-// 		free(img->buffer2);
-// 	}
-// 	free(img);
-// }
-
-// static void	ft_clear_lines(t_wire *wirefr)
-// {
-// 	int	i;
-
-// 	if (!wirefr || !wirefr->lines)
-// 		return ;
-// 	i = 0;
-// 	while (i < wirefr->num_lines)
-// 	{
-// 		free(wirefr->lines[i].p1);
-// 		free(wirefr->lines[i].p2);
-// 		i++;
-// 	}
-// 	free(wirefr->lines);
-// 	free(wirefr);
-// }
+void	ft_clear_mlx(t_mlx *var)
+{
+	if (var)
+	{
+		if (var->mlx_win)
+			mlx_destroy_window(var->mlx_ptr, var->mlx_win);
+		free(var);
+	}
+}
 
 void	ft_cleardata(t_data *data)
 {
-	data->img = NULL;
-	// if (!data)
-	// 	return ;
-	// if (data->var)
-	// 	free(data->var);
-	// ft_clear_images(data->img);
-	// ft_clear_lines(data->wirefr);
-	// free(data);
+	if (data)
+	{
+		ft_clear_mlx(data->var);
+		ft_clear_images(data->img);
+		ft_clear_wireframe(data->wirefr);
+		free(data);
+	}
 }

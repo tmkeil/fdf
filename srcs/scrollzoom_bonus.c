@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scrollzoom.c                                       :+:      :+:    :+:   */
+/*   scrollzoom_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 00:17:35 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/25 03:48:45 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/28 03:27:10 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,8 @@ void	ft_zoom_out(t_data **data, t_wire **wire)
 {
 	int		i;
 	int		j;
-	t_img	*buffer;
 
-	buffer = NULL;
 	i = 0;
-	printf("zoom out\n");
 	while (i < (*wire)->height)
 	{
 		j = 0;
@@ -33,20 +30,15 @@ void	ft_zoom_out(t_data **data, t_wire **wire)
 		}
 		i++;
 	}
-	ft_set_n_paint_buffer(*data, &buffer);
-	ft_connect_points(*data, &buffer);
-	ft_put_buffer_to_window(data, &buffer);
+	ft_draw_new(data);
 }
 
 void	ft_zoom_in(t_data **data, t_wire **wire)
 {
 	int		i;
 	int		j;
-	t_img	*buffer;
 
-	buffer = NULL;
 	i = 0;
-	printf("zoom in\n");
 	while (i < (*wire)->height)
 	{
 		j = 0;
@@ -59,7 +51,5 @@ void	ft_zoom_in(t_data **data, t_wire **wire)
 		}
 		i++;
 	}
-	ft_set_n_paint_buffer(*data, &buffer);
-	ft_connect_points(*data, &buffer);
-	ft_put_buffer_to_window(data, &buffer);
+	ft_draw_new(data);
 }

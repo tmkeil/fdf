@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:27:00 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/28 01:40:57 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/28 03:10:38 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,24 @@ void	ft_translate(t_point *point, float x, float y)
 	point->y += y;
 }
 
-void	ft_rotate(t_point *p, float w, void (*f)(t_point *, float))
+void	ft_rotate(t_wire **a, float w, void (*f)(t_point *, float))
 {
-	f(p, w * M_PI / 180);
+	int		i;
+	int		j;
+	t_point	**p;
+
+	i = 0;
+	p = (*a)->transformed;
+	while (i < (*a)->height)
+	{
+		j = 0;
+		while (j < (*a)->widths[i])
+		{
+			f(&p[i][j], w * M_PI / 180);
+			j++;
+		}
+		i++;
+	}
 }
 
 void	ft_scale(t_wire **wire, float fac, float pad)
