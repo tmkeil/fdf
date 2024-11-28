@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:50:50 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/28 02:41:37 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/28 03:52:58 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	destroy(t_data *data)
 	{
 		mlx_destroy_image(data->var->mlx_ptr, data->img->current->img);
 		mlx_destroy_window(data->var->mlx_ptr, data->var->mlx_win);
+		free(data->var);
 	}
 	return (0);
 }
