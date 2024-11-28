@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:58:12 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/26 00:07:12 by tobke            ###   ########.fr       */
+/*   Updated: 2024/11/28 00:35:01 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	ft_matrix(t_wire **wire, char **split, int i, int j)
 	val = ft_atol(split[0]);
 	if (val > INT_MAX || val < INT_MIN)
 		return (0);
-	(*wire)->transformed[i][j].x = j;
-	(*wire)->transformed[i][j].y = i;
-	(*wire)->transformed[i][j].z = (int)val;
+	(*wire)->transformed[i][j].x = (float)j;
+	(*wire)->transformed[i][j].y = (float)i;
+	(*wire)->transformed[i][j].z = (float)val;
 	return (1);
 }
 

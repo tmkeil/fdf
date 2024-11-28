@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 20:16:11 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/24 21:01:02 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/28 00:50:37 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,40 @@ int	ft_map_height(char *filename)
 	return (free(line), close(fd), height);
 }
 
-void	ft_set_line(t_line_vars *line, t_point *p1, t_point *p2)
+void	ft_set_line(t_line_vars *line, t_point *p1, t_point *p2, int *len)
 {
-	line->dx = abs(p2->x - p1->x);
-	line->dy = -abs(p2->y - p1->y);
-	line->sx = (p1->x < p2->x) - (p1->x >= p2->x);
-	line->sy = (p1->y < p2->y) - (p1->y >= p2->y);
-	line->error = line->dx + line->dy;
+	line->dx = p2->x - p1->x;
+	line->dy = p2->y - p1->y;
+	line->len = sqrtf(powf(line->dx, 2) + powf(line->dy, 2));
+	// printf("x1 = %f, x2 = %f, y1 = %f, y2 = %f\n", p1->x, p2->x, p1->y, p2->y);
+	printf("line->dx = %f, und line->dy = %f\n", line->dx, line->dy);
+	printf("line->len = %i\n", line->len);
+	*len = line->len;
+	if (!*len)
+		return ;
+	line->sx = line->dx / line->len;
+	line->sy = line->dy / line->len;
 }
 
-uint32_t	ft_interpol_color(t_point *p1, t_point *p2, t_point cur)
+uint32_t	ft_interpol_color(t_point *p1, t_point *p2, int small, int big)
 {
-	float	ratio;
-	float	big;
-	float	small;
+	uint8_t r;
+	uint8_t	g;
+	uint8_t	b;
+	uint8_t	col1;
+	uint8_t	col2;
 
-	big = sqrtf(powf(p2->x - p1->x, 2) + powf(p2->y - p1->y, 2));
-	small = sqrtf(powf(cur.x - p1->x, 2) + powf(cur.y - p1->y, 2));
-	uint8_t r, g, b;
-	if (big == 0.0f)
+	if (big == 0)
 		return (p1->color);
-	ratio = small / big;
-	r = (uint8_t)(((p1->color >> 16) & 0xFF) + (((p2->color >> 16) & 0xFF)
-				- ((p1->color >> 16) & 0xFF)) * ratio);
-	g = (uint8_t)(((p1->color >> 8) & 0xFF) + (((p2->color >> 8) & 0xFF) - ((p1->color >> 8) & 0xFF))
-			* ratio);
-	b = (uint8_t)((p1->color & 0xFF) + ((p2->color & 0xFF) - (p1->color & 0xFF)) * ratio);
+	col1 = (p1->color >> 16) & 0xFF;
+	col2 = (p2->color >> 16) & 0xFF;
+	r = (uint8_t)((col1) + (col2 - col1) * (small / big));
+	col1 = (p1->color >> 8) & 0xFF;
+	col2 = (p2->color >> 8) & 0xFF;
+	g = (uint8_t)((col1) + (col2 - col1) * (small / big));
+	col1 = (p1->color) & 0xFF;
+	col2 = (p2->color) & 0xFF;
+	b = (uint8_t)((col1) + (col2 - col1) * (small / big));
 	return ((r << 16) | (g << 8) | b);
 }
 

@@ -6,14 +6,14 @@
 /*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/27 13:14:03 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/28 01:35:48 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-# define WIDTH 1000
-# define HEIGHT 1000
+# define WIDTH 500
+# define HEIGHT 500
 # define BACKCOL 0x000000
 # define PKTCOL 0xffffff
 
@@ -74,10 +74,9 @@ typedef struct s_wire
 	int			*widths;
 	int			height;
 	float		max_w;
-	float		max_h;
 	float		auto_scale;
-	double		avg_width;
-	double		avg_height;
+	double		avg_w;
+	double		avg_h;
 }				t_wire;
 
 typedef struct s_mouse
@@ -99,9 +98,9 @@ typedef struct s_line_vars
 {
 	float		dx;
 	float		dy;
+	int			len;
 	float		sx;
 	float		sy;
-	float		error;
 }				t_line_vars;
 
 // init
@@ -113,14 +112,12 @@ int				ft_set_n_paint_buffer(t_data *data, t_img **buffer);
 void			ft_put_buffer_to_window(t_data **data, t_img **current);
 void			ft_drawline(t_point *p1, t_point *p2, t_img **buffer);
 void			ft_set_max_width(t_wire *wire);
-void			ft_update_current(float *cur_x, float *cur_y, t_line_vars *line);
-void			ft_set_max_height(t_wire *wire);
 
 // utils2
 size_t			ft_wordcount(char *line);
 int				ft_map_height(char *filename);
-void			ft_set_line(t_line_vars *line, t_point *p1, t_point *p2);
-uint32_t		ft_interpol_color(t_point *p1, t_point *p2, t_point cur);
+void			ft_set_line(t_line_vars *line, t_point *p1, t_point *p2, int *len);
+uint32_t		ft_interpol_color(t_point *p1, t_point *p2, int small, int big);
 
 // numbers
 long			ft_atol(char *s);
@@ -137,7 +134,7 @@ void			ft_clrptr(void **ptr);
 int				ft_wire(t_data **data);
 
 // transformation
-void			ft_scale(t_wire **wire, float fac, int pad);
+void			ft_scale(t_wire **wire, float fac, float pad);
 void			ft_translate(t_point *point, float x, float y);
 void			ft_rotate(t_point *p, float w, void (*f)(t_point *, float));
 
@@ -147,7 +144,6 @@ void			ft_rotate_x(t_point *point, float rad);
 void			ft_rotate_y(t_point *point, float rad);
 void			ft_rotate_z(t_point *point, float rad);
 
-// void			ft_print(t_point **map, t_map *v);
 // mouse
 void			ft_zoom_out(t_data **data, t_wire **wire);
 void			ft_zoom_in(t_data **data, t_wire **wire);
@@ -156,6 +152,6 @@ void			ft_transform_points(t_wire **wire);
 void			ft_connect_points(t_data *data, t_img **buffer);
 
 void			ft_avg_width(t_wire **wire);
-void			ft_avg_height(t_wire **wire)
+void			ft_avg_height(t_wire **wire);
 
 #endif
