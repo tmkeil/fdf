@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   clear.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:13:32 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/28 04:01:11 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/29 12:40:58 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	ft_clrptr(void **ptr)
+{
+	int	i;
+
+	if (!ptr)
+		return ;
+	i = 0;
+	while (ptr[i])
+		free(ptr[i++]);
+	free(ptr);
+}
 
 void	ft_clear_images(t_imgs *imgs)
 {
