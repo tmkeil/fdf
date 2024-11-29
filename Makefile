@@ -29,8 +29,13 @@ OBJSDIR = objs
 
 SRCS = main.c utils.c utils2.c clear.c init.c parse.c numbers.c wireframe.c transformations.c rotation_matrices.c \
 		scrollzoom_bonus.c handlemouse_bonus.c translate_bonus.c
+
+SRCS_BONUS = handle_input.c scrollzoom_bonus.c translate_bonus.c 
+
 SRCSS = $(addprefix $(SRCSDIR)/, $(SRCS))
+SRCSS_BONUS = $(addprefix $(SRCSDIR)/, $(SRCS_BONUS))
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))
+OBJS_BONUS = $(addprefix $(OBJSDIR)/, $(SRCS_BONUS:.c=.o))
 
 all: $(NAME)
 
@@ -38,18 +43,18 @@ $(NAME): $(LIBFT) $(MINILIBX) $(OBJS)
 	@echo "\n\n\n\n\ncreate\n\n\n\n\n\n\n\n"
 	$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(INCLUDES) -o $(NAME)
 
+bonus: $(LIBFT) $(MINILIBX) $(OBJS_BONUS)
+	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBS) $(INCLUDES) -o $(NAME)
+
 ifeq ($(UNAME), Linux)
-    $(MINILIBX):  # Only for Linux
-	@echo "Compiling MinilibX for Linux..."
-	$(MAKE) -C $(MINILIBXLINUXDIR)  # Navigate into the linux folder and run make there
+    $(MINILIBX):
+	$(MAKE) -C $(MINILIBXLINUXDIR)
 else
     $(MINILIBX):
-	@echo "Compiling MinilibX for macOS..."
-	$(MAKE) -C $(MINILIBXDIR)  # For macOS, change the directory accordingly
+	$(MAKE) -C $(MINILIBXDIR)
 endif
 
 $(LIBFT):
-	@echo "\n\n\n\n\ncrea12222te\n\n\n\n\n\n\n\n"
 	$(MAKE) -C $(LIBFTDIR)
 
 $(OBJSDIR):
@@ -57,8 +62,6 @@ $(OBJSDIR):
 
 $(OBJSDIR)/%.o: $(SRCSDIR)/%.c | $(OBJSDIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-re: fclean all
 
 clean:
 	rm -rf $(OBJSDIR)
@@ -70,4 +73,6 @@ fclean: clean
 	rm -rf $(NAME)
 	$(MAKE) -C $(LIBFTDIR) fclean
 
-.PHONY: all clean fclean re $(LIBFT) $(MINILIBX) $(MINILIBXLINUX)
+re: fclean all
+
+.PHONY: all clean fclean re bonus
