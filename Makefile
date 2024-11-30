@@ -2,7 +2,6 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = fdf
 
-# Platform-specific settings
 UNAME := $(shell uname)
 ifeq ($(UNAME), Linux)
 	INCLUDES = -I/usr/include -I$(LIBFTHEADERS) -I$(MINILIBXLINUXDIR) -I$(HEADERSDIR)
@@ -14,11 +13,8 @@ else
 	MINILIBX = $(MINILIBXDIR)/libmlx.a
 endif
 
-# directories
 MINILIBXDIR = mlx
-# MINILIBX = $(MINILIBXDIR)/libmlx.a
 MINILIBXLINUXDIR = linux
-# MINILIBXLINUX = $(MINILIBXLINUXDIR)/libmlx.a
 
 LIBFTDIR = libft
 LIBFT = $(LIBFTDIR)/libft.a
@@ -28,9 +24,10 @@ SRCSDIR = srcs
 OBJSDIR = objs
 
 SRCS = main.c utils.c utils2.c clear.c init.c parse.c numbers.c wireframe.c transformations.c rotation_matrices.c \
-		scrollzoom_bonus.c handlemouse_bonus.c translate_bonus.c
+		scrollzoom_bonus.c handle_input.c translate_bonus.c
 
-SRCS_BONUS = handle_input.c scrollzoom_bonus.c translate_bonus.c 
+SRCS_BONUS = main_bonus.c init.c parse.c numbers.c handle_input.c scrollzoom_bonus.c translate_bonus.c transformations.c rotation_matrices.c \
+				wireframe.c utils.c utils2.c clear.c
 
 SRCSS = $(addprefix $(SRCSDIR)/, $(SRCS))
 SRCSS_BONUS = $(addprefix $(SRCSDIR)/, $(SRCS_BONUS))
