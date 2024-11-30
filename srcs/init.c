@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 19:14:22 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/24 15:16:47 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/11/30 23:39:47 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ static int	ft_init_var(t_data **data)
 {
 	t_mlx	**mlx;
 
-	mlx = &(*data)->var;
 	(*data)->var = malloc(sizeof(t_mlx));
 	if (!(*data)->var)
 		return (0);
+	mlx = &(*data)->var;
+	(*mlx)->mlx_ptr = NULL;
+	(*mlx)->mlx_win = NULL;
 	(*mlx)->mlx_ptr = mlx_init();
-	(*mlx)->mlx_win = mlx_new_window((*mlx)->mlx_ptr, WIDTH, HEIGHT, "tkeil");
+	(*mlx)->mlx_win = mlx_new_window((*mlx)->mlx_ptr, WIDTH, HEIGHT, "fdf");
 	if (!(*mlx)->mlx_ptr || !(*mlx)->mlx_win)
 		return (0);
 	return (1);
@@ -29,12 +31,11 @@ static int	ft_init_var(t_data **data)
 
 static int	ft_init_wire(t_data **data)
 {
-	t_wire	**wire;
-
-	wire = &(*data)->wirefr;
-	*wire = malloc(sizeof(t_wire));
-	if (!*wire)
+	(*data)->wirefr = malloc(sizeof(t_wire));
+	if (!(*data)->wirefr)
 		return (0);
+	(*data)->wirefr->transformed = NULL;
+	(*data)->wirefr->widths = NULL;
 	return (1);
 }
 
@@ -70,6 +71,9 @@ static int	ft_init_imgs(t_data **data)
 int	ft_init(t_data **data)
 {
 	*data = malloc(sizeof(t_data));
+	(*data)->img = NULL;
+	(*data)->var = NULL;
+	(*data)->wirefr = NULL;
 	if (!*data)
 		return (0);
 	if (!ft_init_var(data))

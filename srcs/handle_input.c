@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_input.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 02:40:13 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/30 13:02:16 by tobke            ###   ########.fr       */
+/*   Updated: 2024/12/01 00:29:59 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ int	mousemove(int x, int y, void *param)
 	if (data->mouse.mouse_down)
 	{
 		if (x > data->mouse.mouse_x || x < data->mouse.mouse_x)
-			ft_move(&data, x, 0);
+			ft_move_x(&data, x);
 		if (y > data->mouse.mouse_y || y < data->mouse.mouse_y)
-			ft_move(&data, y, 1);
+			ft_move_y(&data, y);
 	}
 	return (0);
 }

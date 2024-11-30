@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 12:50:08 by tobke             #+#    #+#             */
-/*   Updated: 2024/11/30 12:50:09 by tobke            ###   ########.fr       */
+/*   Updated: 2024/12/01 00:34:02 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,8 @@
 int	destroy(t_data *data)
 {
 	if (data)
-	{
-		mlx_destroy_image(data->var->mlx_ptr, data->img->current->img);
-		mlx_destroy_window(data->var->mlx_ptr, data->var->mlx_win);
-		free(data->var);
-	}
-	return (0);
+		ft_cleardata(data);
+	exit(0);
 }
 
 int	main(int argc, char *argv[])
