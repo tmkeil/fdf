@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/28 03:20:23 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/12/01 00:30:37 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ int				mouseclick_up(int button, int x, int y, void *param);
 int				mousemove(int x, int y, void *param);
 int				keyup(int key, void *param);
 void			ft_draw_new(t_data **data);
-void			ft_move(t_data **data, int val, int dir);
+void			ft_move_x(t_data **data, int val);
+void			ft_move_y(t_data **data, int val);
 
 #endif
