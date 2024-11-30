@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/15 01:50:50 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/30 13:03:09 by tobke            ###   ########.fr       */
+/*   Created: 2024/11/30 12:50:08 by tobke             #+#    #+#             */
+/*   Updated: 2024/11/30 12:50:09 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ int	main(int argc, char *argv[])
 		return (ft_cleardata(data), 1);
 	mlx_hook(data->var->mlx_win, 17, 0, destroy, data);
 	mlx_hook(data->var->mlx_win, 3, 1L << 1, keyup, data);
+	mlx_hook(data->var->mlx_win, 4, 1L << 2, mouseclick_down, data);
+	mlx_hook(data->var->mlx_win, 5, 1L << 3, mouseclick_up, data);
+	mlx_hook(data->var->mlx_win, 6, 1L << 6, mousemove, data);
 	mlx_loop(data->var->mlx_ptr);
 	return (ft_cleardata(data), 0);
 }
