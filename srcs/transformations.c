@@ -3,14 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   transformations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:27:00 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/28 03:10:38 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/12/01 13:40:16 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+void	ft_setdefault(t_wire **wire)
+{
+	int		i;
+	int		j;
+	t_point	**p;
+
+	i = 0;
+	p = (*wire)->transformed;
+	while (i < (*wire)->height)
+	{
+		j = 0;
+		while (j < (*wire)->widths[i])
+		{
+			ft_translate(&p[i][j], (*wire)->avg_w, (*wire)->avg_h);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	ft_setorigin(t_wire **wire)
+{
+	int		i;
+	int		j;
+	t_point	**p;
+
+	i = 0;
+	p = (*wire)->transformed;
+	ft_avg_height(wire);
+	ft_avg_width(wire);
+	while (i < (*wire)->height)
+	{
+		j = 0;
+		while (j < (*wire)->widths[i])
+		{
+			ft_translate(&p[i][j], -(*wire)->avg_w, -(*wire)->avg_h);
+			j++;
+		}
+		i++;
+	}
+}
 
 void	ft_translate(t_point *point, float x, float y)
 {
@@ -25,6 +67,7 @@ void	ft_rotate(t_wire **a, float w, void (*f)(t_point *, float))
 	t_point	**p;
 
 	i = 0;
+	ft_setorigin(a);
 	p = (*a)->transformed;
 	while (i < (*a)->height)
 	{
@@ -36,6 +79,7 @@ void	ft_rotate(t_wire **a, float w, void (*f)(t_point *, float))
 		}
 		i++;
 	}
+	ft_setdefault(a);
 }
 
 void	ft_scale(t_wire **wire, float fac, float pad)

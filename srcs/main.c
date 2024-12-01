@@ -3,20 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:50:50 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/01 00:26:22 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/12/01 13:54:58 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	destroy(t_data *data)
+static int	destroy_mand(t_data *data)
 {
 	if (data)
 		ft_cleardata(data);
 	exit(0);
+}
+
+static int	keyup_mand(int key, void *param)
+{
+	t_data	*data;
+
+	data = (t_data *)param;
+	if (key == ESC || !data)
+		destroy(data);
+	return (0);
 }
 
 int	main(int argc, char *argv[])
@@ -34,8 +44,8 @@ int	main(int argc, char *argv[])
 		return (ft_cleardata(data), 1);
 	if (!ft_wire(&data))
 		return (ft_cleardata(data), 1);
-	mlx_hook(data->var->mlx_win, 3, 1L << 1, keyup, data);
-	mlx_hook(data->var->mlx_win, 17, 0, destroy, data);
+	mlx_hook(data->var->mlx_win, 3, 1L << 1, keyup_mand, data);
+	mlx_hook(data->var->mlx_win, 17, 0, destroy_mand, data);
 	mlx_loop(data->var->mlx_ptr);
 	return (ft_cleardata(data), 0);
 }

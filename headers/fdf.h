@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/01 00:30:37 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/12/01 14:26:03 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 # define WIDTH 500
 # define HEIGHT 500
 # define BACKCOL 0x000000
-# define PKTCOL 0xffffff
+# define WHITE 0xffffff
 
 # define ESC 53
+# define CTRL 777777
 
 # define UP 126
+# define DOWN 125
 # define LEFT 123
 # define RIGHT 124
-# define W 13
-# define A 0
-# define D 2
+
+# define P 777777
+# define M 777777
 
 # include "../mlx/mlx.h"
 # include "libft.h"
@@ -79,6 +81,7 @@ typedef struct s_wire
 typedef struct s_mouse
 {
 	bool		mouse_down;
+	bool		ctrl_down;
 	int			mouse_x;
 	int			mouse_y;
 }				t_mouse;
@@ -99,6 +102,9 @@ typedef struct s_line_vars
 	float		sx;
 	float		sy;
 }				t_line_vars;
+
+// main
+int				destroy(t_data *data);
 
 // init
 int				ft_init(t_data **data);
@@ -135,6 +141,8 @@ int				ft_wire(t_data **data);
 void			ft_scale(t_wire **wire, float fac, float pad);
 void			ft_translate(t_point *point, float x, float y);
 void			ft_rotate(t_wire **a, float w, void (*f)(t_point *, float));
+void			ft_setorigin(t_wire **wire);
+void			ft_setdefault(t_wire **wire);
 
 // rotation matrices
 void			ft_project_isometric(t_point *point, float rad);
@@ -153,13 +161,16 @@ void			ft_avg_width(t_wire **wire);
 void			ft_avg_height(t_wire **wire);
 
 // event handling bonus
-int				destroy(t_data *data);
-int				mouseclick_down(int button, int x, int y, void *param);
-int				mouseclick_up(int button, int x, int y, void *param);
+void			ft_instructions(void *ptr, void *win);
+int				mouse_down(int button, int x, int y, void *param);
+int				mouse_up(int button, int x, int y, void *param);
 int				mousemove(int x, int y, void *param);
 int				keyup(int key, void *param);
+int				keydown(int key, void *param);
 void			ft_draw_new(t_data **data);
 void			ft_move_x(t_data **data, int val);
 void			ft_move_y(t_data **data, int val);
+void			ft_rot_bonus(t_data *data, int key);
+void			ft_z(t_wire **wire, int pm);
 
 #endif

@@ -1,28 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_input.c                                     :+:      :+:    :+:   */
+/*   handle_input_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 02:40:13 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/01 00:29:59 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/12/01 14:28:54 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_draw_new(t_data **data)
-{
-	t_img	*buffer;
-
-	buffer = NULL;
-	ft_set_n_paint_buffer(*data, &buffer);
-	ft_connect_points(*data, &buffer);
-	ft_put_buffer_to_window(data, &buffer);
-}
-
-int	mouseclick_down(int button, int x, int y, void *param)
+int	mouse_down(int button, int x, int y, void *param)
 {
 	t_data	*data;
 
@@ -33,14 +23,15 @@ int	mouseclick_down(int button, int x, int y, void *param)
 		ft_zoom_in(&data, &data->wirefr);
 	if (button == 1)
 	{
-		data->mouse.mouse_down = 1;
+		data->mouse.mouse_down = true;
 		data->mouse.mouse_x = x;
 		data->mouse.mouse_y = y;
 	}
+	ft_instructions(data->var->mlx_ptr, data->var->mlx_win);
 	return (0);
 }
 
-int	mouseclick_up(int button, int x, int y, void *param)
+int	mouse_up(int button, int x, int y, void *param)
 {
 	t_data	*data;
 
@@ -48,7 +39,7 @@ int	mouseclick_up(int button, int x, int y, void *param)
 	(void)y;
 	data = (t_data *)param;
 	if (button == 1)
-		data->mouse.mouse_down = 0;
+		data->mouse.mouse_down = false;
 	return (0);
 }
 
@@ -63,35 +54,36 @@ int	mousemove(int x, int y, void *param)
 			ft_move_x(&data, x);
 		if (y > data->mouse.mouse_y || y < data->mouse.mouse_y)
 			ft_move_y(&data, y);
+		ft_instructions(data->var->mlx_ptr, data->var->mlx_win);
 	}
 	return (0);
 }
 
 int	keyup(int key, void *param)
 {
-	bool	stat;
 	t_data	*data;
 
-	stat = false;
 	data = (t_data *)param;
 	if (key == ESC || !data)
 		destroy(data);
-	else if (key == W || key == UP)
-	{
-		ft_rotate(&data->wirefr, 2.0f, ft_rotate_x);
-		stat = true;
-	}
-	else if (key == A || key == LEFT)
-	{
-		ft_rotate(&data->wirefr, 2.0f, ft_rotate_y);
-		stat = true;
-	}
-	else if (key == D || key == RIGHT)
-	{
-		ft_rotate(&data->wirefr, 2.0f, ft_rotate_z);
-		stat = true;
-	}
-	if (stat)
-		ft_draw_new(&data);
+	if (key == CTRL)
+		data->mouse.ctrl_down = false;
+	if (key == UP || key == DOWN || key == LEFT || key == RIGHT)
+		ft_rot_bonus(data, key);
+	if (key == P)
+		ft_z(&data->wirefr, 0);
+	else if (key == M)
+		ft_z(&data->wirefr, 1);
+	ft_instructions(data->var->mlx_ptr, data->var->mlx_win);
+	return (0);
+}
+
+int	keydown(int key, void *param)
+{
+	t_data	*data;
+
+	data = (t_data *)param;
+	if (key == CTRL)
+		data->mouse.ctrl_down = true;
 	return (0);
 }

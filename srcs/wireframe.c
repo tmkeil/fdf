@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wireframe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:24:56 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/28 02:30:41 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/12/01 13:34:23 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,15 @@ void	ft_transform_points(t_wire **wire)
 
 	i = 0;
 	p = (*wire)->transformed;
-	ft_scale(wire, 0.5, WIDTH / 10);
+	ft_scale(wire, 0.5, WIDTH / 12);
 	ft_rotate(wire, 30.0f, ft_project_isometric);
-	ft_avg_height(wire);
-	ft_avg_width(wire);
+	ft_setorigin(wire);
 	while (i < (*wire)->height)
 	{
 		j = 0;
 		while (j < (*wire)->widths[i])
 		{
 			ft_translate(&p[i][j], WIDTH / 2, HEIGHT / 2);
-			ft_translate(&p[i][j], -(*wire)->avg_w / 2, -(*wire)->avg_h / 2);
 			j++;
 		}
 		i++;

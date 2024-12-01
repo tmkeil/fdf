@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:58:12 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/01 00:25:44 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/12/01 14:15:28 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_colors(t_wire **wire, char **split, int i, int j)
 	long	val;
 
 	if (!split[1])
-		(*wire)->transformed[i][j].color = (uint32_t)PKTCOL;
+		(*wire)->transformed[i][j].color = (uint32_t)WHITE;
 	else
 	{
 		val = ft_atol_base(split[1], 16);
