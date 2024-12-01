@@ -6,7 +6,7 @@
 /*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:50:50 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/01 13:54:58 by tobke            ###   ########.fr       */
+/*   Updated: 2024/12/01 23:48:40 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	keyup_mand(int key, void *param)
 
 	data = (t_data *)param;
 	if (key == ESC || !data)
-		destroy(data);
+		destroy_mand(data);
 	return (0);
 }
 
@@ -34,8 +34,6 @@ int	main(int argc, char *argv[])
 	t_data	*data;
 
 	data = NULL;
-	if (argc != 2)
-		return (1);
 	if (argc != 2 || !*argv[1])
 		return (1);
 	if (!ft_init(&data))

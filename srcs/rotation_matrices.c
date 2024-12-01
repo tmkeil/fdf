@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotation_matrices.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 21:00:30 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/24 23:26:02 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/12/01 18:24:22 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ void	ft_project_isometric(t_point *point, float rad)
 {
 	float	x;
 	float	y;
+	float	z;
 
 	x = point->x;
 	y = point->y;
-	point->x = x * cos(rad) - y * cos(rad);
-	point->y = x * sin(rad) + y * sin(rad) - point->z;
+	z = point->z;
+	point->x = (x - y) * cos(rad);
+	point->y = -z + (x + y) * sin(rad);
 }
 
 void	ft_rotate_x(t_point *point, float rad)

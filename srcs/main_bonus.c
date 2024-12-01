@@ -6,7 +6,7 @@
 /*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 12:50:08 by tobke             #+#    #+#             */
-/*   Updated: 2024/12/01 14:20:51 by tobke            ###   ########.fr       */
+/*   Updated: 2024/12/01 23:48:59 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ int	main(int argc, char *argv[])
 	t_data	*data;
 
 	data = NULL;
-	if (argc != 2)
-		return (1);
 	if (argc != 2 || !*argv[1])
 		return (1);
 	if (!ft_init(&data))

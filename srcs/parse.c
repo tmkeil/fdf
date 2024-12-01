@@ -6,13 +6,13 @@
 /*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 18:58:12 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/01 14:15:28 by tobke            ###   ########.fr       */
+/*   Updated: 2024/12/01 15:19:09 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	ft_matrix(t_wire **wire, char **split, int i, int j)
+static int	ft_matrix(t_wire **wire, char **split, int i, int j)
 {
 	long	val;
 
@@ -25,7 +25,7 @@ int	ft_matrix(t_wire **wire, char **split, int i, int j)
 	return (1);
 }
 
-int	ft_colors(t_wire **wire, char **split, int i, int j)
+static int	ft_colors(t_wire **wire, char **split, int i, int j)
 {
 	long	val;
 
@@ -41,7 +41,7 @@ int	ft_colors(t_wire **wire, char **split, int i, int j)
 	return (1);
 }
 
-int	ft_map_matrix(t_wire **wire, char *line, int i)
+static int	ft_map_matrix(t_wire **wire, char *line, int i)
 {
 	int		j;
 	char	**split;
@@ -66,7 +66,7 @@ int	ft_map_matrix(t_wire **wire, char *line, int i)
 	return (1);
 }
 
-static int	ft_init_map(t_wire *wire, int fd, char *filename)
+static int	ft_set_map(t_wire *wire, int fd, char *filename)
 {
 	int		height;
 	char	*line;
@@ -106,7 +106,7 @@ int	ft_parsemap(t_data **data, char **argv)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		return (perror("Error opening file"), 0);
-	if (!ft_init_map(wire, fd, filename))
+	if (!ft_set_map(wire, fd, filename))
 		return (close(fd), 0);
 	return (close(fd), 1);
 }

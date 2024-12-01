@@ -6,14 +6,14 @@
 /*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/01 14:26:03 by tobke            ###   ########.fr       */
+/*   Updated: 2024/12/01 18:26:31 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-# define WIDTH 500
-# define HEIGHT 500
+# define WIDTH 800
+# define HEIGHT 800
 # define BACKCOL 0x000000
 # define WHITE 0xffffff
 
