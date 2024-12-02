@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transformations.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 18:27:00 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/02 13:25:10 by tobke            ###   ########.fr       */
+/*   Created: 2024/12/02 14:44:57 by tkeil             #+#    #+#             */
+/*   Updated: 2024/12/02 18:13:02 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,26 @@ void	ft_translate(t_point *point, float x, float y)
 	point->y += y;
 }
 
-void	ft_rotate(t_wire **a, float r, void (*f)(t_point *, float))
+void	ft_rotate(t_wire **a, float w, void (*f)(t_point *, float))
 {
 	int		i;
 	int		j;
 	t_point	**p;
 
 	i = 0;
+	ft_setorigin(a);
 	p = (*a)->transformed;
 	while (i < (*a)->height)
 	{
 		j = 0;
 		while (j < (*a)->widths[i])
 		{
-			f(&p[i][j], r);
+			f(&p[i][j], w * M_PI / 180);
 			j++;
 		}
 		i++;
 	}
+	ft_setorigin(a);
 }
 
 void	ft_autoscale(t_wire **wire, float fac, float pad)

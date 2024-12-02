@@ -23,10 +23,10 @@ HEADERSDIR = headers
 SRCSDIR = srcs
 OBJSDIR = objs
 
-SRCS = main.c utils.c utils2.c clear.c init.c parse.c numbers.c wireframe.c transformations.c rotation_matrices.c
+SRCS = main.c utils.c utils2.c clear.c clear_images.c init.c parse.c numbers.c wireframe.c transformations.c rotation_matrices.c positioning.c window_resize.c
 
-SRCS_BONUS = main_bonus.c handle_input_bonus.c transformations_bonus.c utils_bonus.c transformations.c rotation_matrices.c \
-				wireframe.c utils.c utils2.c clear.c init.c parse.c numbers.c
+SRCS_BONUS = main_bonus.c handle_input_bonus.c transformations_bonus.c utils_bonus.c window_resize_bonus.c transformations.c rotation_matrices.c \
+				wireframe.c utils.c utils2.c clear.c clear_images.c init.c parse.c numbers.c positioning.c
 
 SRCSS = $(addprefix $(SRCSDIR)/, $(SRCS))
 SRCSS_BONUS = $(addprefix $(SRCSDIR)/, $(SRCS_BONUS))

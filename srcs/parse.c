@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 18:58:12 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/01 15:19:09 by tobke            ###   ########.fr       */
+/*   Created: 2024/12/02 14:45:38 by tkeil             #+#    #+#             */
+/*   Updated: 2024/12/02 14:45:43 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,19 @@ static int	ft_map_matrix(t_wire **wire, char *line, int i)
 	split = ft_split(line, ' ');
 	(*wire)->transformed[i] = malloc(sizeof(t_point) * (*wire)->widths[i]);
 	if (!split || !(*wire)->transformed[i])
-		return (ft_clrptr((void **) split), 0);
+		return (ft_clrptr((void **)split), 0);
 	j = 0;
 	while (split[j])
 	{
 		split2 = ft_split(split[j], ',');
 		if (!split2)
-			return (ft_clrptr((void **) split), 0);
+			return (ft_clrptr((void **)split), 0);
 		if (!ft_matrix(wire, split2, i, j) || !ft_colors(wire, split2, i, j))
-			return (ft_clrptr((void **) split), ft_clrptr((void **) split2), 0);
-		ft_clrptr((void **) split2);
+			return (ft_clrptr((void **)split), ft_clrptr((void **)split2), 0);
+		ft_clrptr((void **)split2);
 		j++;
 	}
-	ft_clrptr((void **) split);
+	ft_clrptr((void **)split);
 	return (1);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transformations_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/25 00:17:35 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/01 18:24:58 by tobke            ###   ########.fr       */
+/*   Created: 2024/12/02 14:45:02 by tkeil             #+#    #+#             */
+/*   Updated: 2024/12/02 19:47:22 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	ft_move_x(t_data **data, int val)
 		i++;
 	}
 	(*data)->mouse.mouse_x = val;
+	ft_middle(&(*data)->wirefr);
 	ft_draw_new(data);
 }
 
@@ -99,28 +100,39 @@ void	ft_move_y(t_data **data, int val)
 		i++;
 	}
 	(*data)->mouse.mouse_y = val;
+	ft_middle(&(*data)->wirefr);
 	ft_draw_new(data);
 }
 
-void	ft_z(t_wire **wire, int pm)
-{
-	int		i;
-	int		j;
-	t_point	**p;
+// void	ft_z(t_data *data, t_wire **wire, int pm)
+// {
+// 	int		i;
+// 	int		j;
+// 	t_point	**p;
 
-	i = 0;
-	p = (*wire)->transformed;
-	while (i < (*wire)->height)
-	{
-		j = 0;
-		while (j < (*wire)->widths[i])
-		{
-			if (pm == 0)
-				p[i][j].z *= 1.2;
-			if (pm == 1)
-				p[i][j].z *= 0.8;
-			j++;
-		}
-		i++;
-	}
-}
+// 	i = 0;
+// 	p = (*wire)->transformed;
+// 	while (i < (*wire)->height)
+// 	{
+// 		j = 0;
+// 		printf("reihe %i\n", i);
+// 		while (j < (*wire)->widths[i])
+// 		{
+// 			printf("spalte %i\n", j);
+// 			if (pm == 0)
+// 			{
+// 				printf("z davor %f\n", p[i][j].z);
+// 				p[i][j].z *= 1.2;
+// 				printf("z ist nun %f\n", p[i][j].z);
+// 			}
+// 			printf("\n");
+// 			if (pm == 1)
+// 				p[i][j].z *= 0.8;
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	printf("die echten z sind 1: %f 2: %f\n", data->wirefr->transformed[1][0].z, data->wirefr->transformed[1][1].z);
+// 	printf("hjsdjsjfhjsfsf\n");
+// 	ft_draw_new(&data);
+// }

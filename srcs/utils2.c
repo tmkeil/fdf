@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 20:16:11 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/01 16:52:35 by tobke            ###   ########.fr       */
+/*   Created: 2024/12/02 14:44:27 by tkeil             #+#    #+#             */
+/*   Updated: 2024/12/02 18:50:54 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_set_line(t_line_vars *line, t_point *p1, t_point *p2, int *len)
 
 uint32_t	ft_interpol_color(t_point *p1, t_point *p2, int small, int big)
 {
-	uint8_t r;
+	uint8_t	r;
 	uint8_t	g;
 	uint8_t	b;
 	uint8_t	col1;
@@ -70,8 +70,6 @@ void	ft_putpxl(t_img **img, int x, int y, uint32_t color)
 {
 	int	offset;
 
-	if (x < 0 || y < 0 || x >= WIDTH || y >= HEIGHT)
-		return ;
 	offset = x * ((*img)->bpp / 8) + y * (*img)->linelen;
 	*(unsigned int *)((*img)->data + offset) = color;
 }

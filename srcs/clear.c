@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/20 13:13:32 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/02 12:49:28 by tobke            ###   ########.fr       */
+/*   Created: 2024/12/02 14:46:14 by tkeil             #+#    #+#             */
+/*   Updated: 2024/12/02 18:00:31 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,40 +44,14 @@ static void	ft_clear_wireframe(t_wire *wirefr)
 	free(wirefr);
 }
 
-void	ft_clear_images(t_imgs *imgs, void *mlx_ptr)
+void	ft_clear_mlx(t_data **data)
 {
-	if (imgs->current)
+	if ((*data) && (*data)->var)
 	{
-		if (imgs->current == imgs->buffer1)
-			imgs->buffer1 = NULL;
-		else if (imgs->current == imgs->buffer2)
-			imgs->buffer2 = NULL;
-		if (imgs->current->data)
-			mlx_destroy_image(mlx_ptr, imgs->current->img);
-		free(imgs->current);
-	}
-	if (imgs->buffer1)
-	{
-		if (imgs->buffer1->data)
-			mlx_destroy_image(mlx_ptr, imgs->buffer1->img);
-		free(imgs->buffer1);
-	}
-	if (imgs->buffer2)
-	{
-		if (imgs->buffer2->data)
-			mlx_destroy_image(mlx_ptr, imgs->buffer2->img);
-		free(imgs->buffer2);
-	}
-	free(imgs);
-}
-
-void	ft_clear_mlx(t_data *data)
-{
-	if (data && data->var)
-	{
-		if (data->var->mlx_win)
-			mlx_destroy_window(data->var->mlx_ptr, data->var->mlx_win);
-		free(data->var);
+		if ((*data)->var->mlx_win)
+			mlx_destroy_window((*data)->var->mlx_ptr, (*data)->var->mlx_win);
+		free((*data)->var);
+		(*data)->var = NULL;
 	}
 }
 
@@ -86,10 +60,10 @@ void	ft_cleardata(t_data *data)
 	if (data)
 	{
 		if (data->img)
-			ft_clear_images(data->img, data->var->mlx_ptr);
+			ft_clear_images(&data->img, data->var->mlx_ptr);
 		if (data->wirefr)
 			ft_clear_wireframe(data->wirefr);
-		ft_clear_mlx(data);
+		ft_clear_mlx(&data);
 		free(data);
 		data = NULL;
 	}

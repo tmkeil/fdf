@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/18 14:50:10 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/02 12:30:34 by tobke            ###   ########.fr       */
+/*   Created: 2024/12/02 14:44:39 by tkeil             #+#    #+#             */
+/*   Updated: 2024/12/02 18:05:26 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int	ft_set_n_paint_buffer(t_data *data, t_img **buffer)
 	if (!buffer)
 		return (0);
 	i = 0;
-	while (i < HEIGHT)
+	while (i < data->wnd.wnd_h)
 	{
 		j = 0;
-		while (j < WIDTH)
+		while (j < data->wnd.wnd_w)
 			ft_putpxl(buffer, j++, i, BACKCOL);
 		i++;
 	}

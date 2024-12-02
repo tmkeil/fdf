@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window_resize.c                                    :+:      :+:    :+:   */
+/*   window_resize_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/02 14:44:04 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/02 19:54:57 by tkeil            ###   ########.fr       */
+/*   Created: 2024/12/02 17:58:58 by tkeil             #+#    #+#             */
+/*   Updated: 2024/12/02 18:52:16 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	ft_reset_wnd(t_data **data, int w, int h)
 	return (1);
 }
 
-int	ft_wnd_resize_mand(t_data **data, int size)
+int	ft_wnd_resize_bonus(t_data **data, int size)
 {
 	t_img	*buffer;
 
@@ -43,7 +43,11 @@ int	ft_wnd_resize_mand(t_data **data, int size)
 	if (!ft_set_n_paint_buffer(*data, &buffer))
 		return (0);
 	ft_connect_points(*data, &buffer);
-	mlx_hook((*data)->var->mlx_win, 3, 1L << 1, keyup_mand, *data);
-	mlx_hook((*data)->var->mlx_win, 17, 0, destroy_mand, *data);
+	mlx_hook((*data)->var->mlx_win, 17, 0, destroy, *data);
+	mlx_hook((*data)->var->mlx_win, 2, 1L << 0, keydown, *data);
+	mlx_hook((*data)->var->mlx_win, 3, 1L << 1, keyup, *data);
+	mlx_hook((*data)->var->mlx_win, 4, 1L << 2, mouse_down, *data);
+	mlx_hook((*data)->var->mlx_win, 5, 1L << 3, mouse_up, *data);
+	mlx_hook((*data)->var->mlx_win, 6, 1L << 6, mousemove, *data);
 	return (ft_put_buffer_to_window(data, &buffer), 1);
 }

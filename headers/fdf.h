@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/02 13:30:11 by tobke            ###   ########.fr       */
+/*   Updated: 2024/12/02 19:53:20 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,20 @@
 # define WHITE 0xffffff
 
 # define ESC 53
-# define CTRL 777777
+# define CTRL 256
+
+# define W 13
+# define S 1
+# define A 0
+# define D 2
 
 # define UP 126
 # define DOWN 125
 # define LEFT 123
 # define RIGHT 124
 
-# define PLUS 777777
-# define MINUS 777777
+# define P 35
+# define M 46
 
 # include "../mlx/mlx.h"
 # include "libft.h"
@@ -119,15 +124,16 @@ int				ft_init_var(t_data **data);
 int				ft_init_imgs(t_data **data);
 
 // utils
-void			ft_putpxl(t_img **img, int x, int y, uint32_t color);
+int				keyup_mand(int key, void *param);
+int				destroy_mand(t_data *data);
 int				ft_set_n_paint_buffer(t_data *data, t_img **buffer);
 void			ft_put_buffer_to_window(t_data **data, t_img **current);
-void			ft_drawline(t_point *p1, t_point *p2, t_img **buffer);
 void			ft_set_max_width(t_wire *wire);
 
 // utils2
 size_t			ft_wordcount(char *line);
 int				ft_map_height(char *filename);
+void			ft_putpxl(t_img **buffer, int x, int y, uint32_t color);
 void			ft_set_line(t_line_vars *line, t_point *p1, t_point *p2,
 					int *len);
 uint32_t		ft_interpol_color(t_point *p1, t_point *p2, int small, int big);
@@ -141,31 +147,32 @@ int				ft_parsemap(t_data **data, char **argv);
 
 // clear
 void			ft_cleardata(t_data *data);
-void			ft_clear_images(t_imgs *imgs, void *mlx_ptr);
-void			ft_clear_mlx(t_data *data);
+void			ft_clear_images(t_imgs **imgs, void *mlx_ptr);
+void			ft_clear_mlx(t_data **data);
 void			ft_clrptr(void **ptr);
 
 // wireframe
-int				ft_wire(t_data **data);
+int				ft_wire(t_data *data);
+void			ft_drawline(t_data *d, t_point *p1, t_point *p2, t_img **buf);
 
 // transformation
 void			ft_autoscale(t_wire **wire, float fac, float pad);
 void			ft_translate(t_point *point, float x, float y);
-void			ft_rotate(t_wire **a, float r, void (*f)(t_point *, float));
+void			ft_rotate(t_wire **a, float w, void (*f)(t_point *, float));
 void			ft_setorigin(t_wire **wire);
 void			ft_setdefault(t_wire **wire);
 
 // rotation matrices
-void			ft_project_isometric(t_data data, t_point *point, float rad);
-void			ft_rotate_x(t_data data, t_point *point, float rad);
-void			ft_rotate_y(t_data data, t_point *point, float rad);
-void			ft_rotate_z(t_data data, t_point *point, float rad);
+void			ft_project_isometric(t_point *point, float rad);
+void			ft_rotate_x(t_point *point, float rad);
+void			ft_rotate_y(t_point *point, float rad);
+void			ft_rotate_z(t_point *point, float rad);
 
 // mouse
 void			ft_zoom_out(t_data **data, t_wire **wire);
 void			ft_zoom_in(t_data **data, t_wire **wire);
 
-void			ft_transform_points(t_wire **wire);
+void			ft_transform_points(t_wire **wire, int w, int h);
 void			ft_connect_points(t_data *data, t_img **buffer);
 
 // positioning
@@ -174,7 +181,8 @@ void			ft_avg_width(t_wire **wire, float val);
 void			ft_avg_height(t_wire **wire, float val);
 
 // resizing wnd
-int    			ft_wnd_resize(t_data *data, int size);
+int				ft_wnd_resize_mand(t_data **data, int size);
+int				ft_wnd_resize_bonus(t_data **data, int size);
 
 // event handling bonus
 void			ft_instructions(void *ptr, void *win);
@@ -187,6 +195,5 @@ void			ft_draw_new(t_data **data);
 void			ft_move_x(t_data **data, int val);
 void			ft_move_y(t_data **data, int val);
 void			ft_rot_bonus(t_data *data, int key);
-void			ft_z(t_wire **wire, int pm);
 
 #endif

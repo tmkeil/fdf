@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   rotation_matrices.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/23 21:00:30 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/02 13:20:20 by tobke            ###   ########.fr       */
+/*   Created: 2024/12/02 14:45:07 by tkeil             #+#    #+#             */
+/*   Updated: 2024/12/02 14:55:05 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_project_isometric(t_data data, t_point *point, float rad)
+void	ft_project_isometric(t_point *point, float rad)
 {
 	float	x;
 	float	y;
@@ -25,7 +25,7 @@ void	ft_project_isometric(t_data data, t_point *point, float rad)
 	point->y = -z + (x + y) * sin(rad);
 }
 
-void	ft_rotate_x(t_data data, t_point *point, float rad)
+void	ft_rotate_x(t_point *point, float rad)
 {
 	float	y;
 	float	z;
@@ -36,7 +36,7 @@ void	ft_rotate_x(t_data data, t_point *point, float rad)
 	point->z = y * sin(rad) + z * cos(rad);
 }
 
-void	ft_rotate_y(t_data data, t_point *point, float rad)
+void	ft_rotate_y(t_point *point, float rad)
 {
 	float	x;
 	float	z;
@@ -47,7 +47,7 @@ void	ft_rotate_y(t_data data, t_point *point, float rad)
 	point->z = -x * sin(rad) + z * cos(rad);
 }
 
-void	ft_rotate_z(t_data data, t_point *point, float rad)
+void	ft_rotate_z(t_point *point, float rad)
 {
 	float	x;
 	float	y;
