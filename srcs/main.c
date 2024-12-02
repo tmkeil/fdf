@@ -6,7 +6,7 @@
 /*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:50:50 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/01 23:48:40 by tobke            ###   ########.fr       */
+/*   Updated: 2024/12/02 13:27:27 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ static int	keyup_mand(int key, void *param)
 	data = (t_data *)param;
 	if (key == ESC || !data)
 		destroy_mand(data);
+	if (key == PLUS)
+	{
+		if (!ft_wnd_resize(data, 100))
+			return (ft_cleardata(data), 0);
+	}
+	else if (key == MINUS)
+	{
+		if (!ft_wnd_resize(data, -100))
+			return (ft_cleardata(data), 0);
+	}
 	return (0);
 }
 

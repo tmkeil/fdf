@@ -6,7 +6,7 @@
 /*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:13:32 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/02 00:23:45 by tobke            ###   ########.fr       */
+/*   Updated: 2024/12/02 12:49:28 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_clrptr(void **ptr)
 	free(ptr);
 }
 
-void	ft_clear_wireframe(t_wire *wirefr)
+static void	ft_clear_wireframe(t_wire *wirefr)
 {
 	int	i;
 
@@ -44,7 +44,7 @@ void	ft_clear_wireframe(t_wire *wirefr)
 	free(wirefr);
 }
 
-static void	ft_clear_images(t_imgs *imgs, void *mlx_ptr)
+void	ft_clear_images(t_imgs *imgs, void *mlx_ptr)
 {
 	if (imgs->current)
 	{
@@ -91,5 +91,6 @@ void	ft_cleardata(t_data *data)
 			ft_clear_wireframe(data->wirefr);
 		ft_clear_mlx(data);
 		free(data);
+		data = NULL;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:24:56 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/02 00:20:56 by tobke            ###   ########.fr       */
+/*   Updated: 2024/12/02 13:14:24 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,10 @@ void	ft_transform_points(t_wire **wire)
 
 	i = 0;
 	p = (*wire)->transformed;
-	ft_scale(wire, 0.5, WIDTH / 12);
+	ft_autoscale(wire, 0.5, WIDTH / 12);
 	ft_setorigin(wire);
-	ft_rotate(wire, 30.0f, ft_project_isometric);
+	ft_rotate(wire, 30.0f * M_PI / 180, ft_project_isometric);
+	ft_setorigin(wire);
 	while (i < (*wire)->height)
 	{
 		j = 0;
@@ -75,6 +76,7 @@ void	ft_transform_points(t_wire **wire)
 		}
 		i++;
 	}
+	ft_middle(wire);
 }
 
 int	ft_wire(t_data **data)

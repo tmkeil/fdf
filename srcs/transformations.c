@@ -6,7 +6,7 @@
 /*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 18:27:00 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/01 23:59:39 by tobke            ###   ########.fr       */
+/*   Updated: 2024/12/02 13:25:10 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ void	ft_setorigin(t_wire **wire)
 
 	i = 0;
 	p = (*wire)->transformed;
-	ft_avg_height(wire);
-	ft_avg_width(wire);
+	ft_middle(wire);
 	while (i < (*wire)->height)
 	{
 		j = 0;
@@ -60,29 +59,27 @@ void	ft_translate(t_point *point, float x, float y)
 	point->y += y;
 }
 
-void	ft_rotate(t_wire **a, float w, void (*f)(t_point *, float))
+void	ft_rotate(t_wire **a, float r, void (*f)(t_point *, float))
 {
 	int		i;
 	int		j;
 	t_point	**p;
 
 	i = 0;
-	ft_setorigin(a);
 	p = (*a)->transformed;
 	while (i < (*a)->height)
 	{
 		j = 0;
 		while (j < (*a)->widths[i])
 		{
-			f(&p[i][j], w * M_PI / 180);
+			f(&p[i][j], r);
 			j++;
 		}
 		i++;
 	}
-	ft_setdefault(a);
 }
 
-void	ft_scale(t_wire **wire, float fac, float pad)
+void	ft_autoscale(t_wire **wire, float fac, float pad)
 {
 	int		i;
 	int		j;

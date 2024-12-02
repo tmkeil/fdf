@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkeil <tkeil@student.42heilbronn.de>       +#+  +:+       +#+        */
+/*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 14:50:10 by tkeil             #+#    #+#             */
-/*   Updated: 2024/11/28 01:33:48 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/12/02 12:30:34 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,50 +71,3 @@ void	ft_set_max_width(t_wire *wire)
 	wire->max_w = max - min;
 }
 
-void	ft_avg_height(t_wire **wire)
-{
-	int		i;
-	int		j;
-	int		total;
-	double	sum;
-
-	i = 0;
-	total = 0;
-	sum = 0;
-	while (i < (*wire)->height)
-	{
-		j = 0;
-		while (j < (*wire)->widths[i])
-		{
-			sum += (*wire)->transformed[i][j].y;
-			j++;
-			total++;
-		}
-		i++;
-	}
-	(*wire)->avg_h = sum / total;
-}
-
-void	ft_avg_width(t_wire **wire)
-{
-	int		i;
-	int		j;
-	int		total;
-	double	sum;
-
-	i = 0;
-	total = 0;
-	sum = 0;
-	while (i < (*wire)->height)
-	{
-		j = 0;
-		while (j < (*wire)->widths[i])
-		{
-			sum += (*wire)->transformed[i][j].x;
-			j++;
-			total++;
-		}
-		i++;
-	}
-	(*wire)->avg_w = sum / total;
-}

@@ -6,7 +6,7 @@
 /*   By: tobke <tobke@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 01:59:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/01 18:26:31 by tobke            ###   ########.fr       */
+/*   Updated: 2024/12/02 13:30:11 by tobke            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define LEFT 123
 # define RIGHT 124
 
-# define P 777777
-# define M 777777
+# define PLUS 777777
+# define MINUS 777777
 
 # include "../mlx/mlx.h"
 # include "libft.h"
@@ -74,8 +74,8 @@ typedef struct s_wire
 	int			height;
 	float		max_w;
 	float		auto_scale;
-	double		avg_w;
-	double		avg_h;
+	float		avg_w;
+	float		avg_h;
 }				t_wire;
 
 typedef struct s_mouse
@@ -86,12 +86,19 @@ typedef struct s_mouse
 	int			mouse_y;
 }				t_mouse;
 
+typedef struct s_wnd
+{
+	int			wnd_w;
+	int			wnd_h;
+}				t_wnd;
+
 typedef struct s_data
 {
 	t_mlx		*var;
 	t_imgs		*img;
 	t_wire		*wirefr;
 	t_mouse		mouse;
+	t_wnd		wnd;
 }				t_data;
 
 typedef struct s_line_vars
@@ -108,6 +115,8 @@ int				destroy(t_data *data);
 
 // init
 int				ft_init(t_data **data);
+int				ft_init_var(t_data **data);
+int				ft_init_imgs(t_data **data);
 
 // utils
 void			ft_putpxl(t_img **img, int x, int y, uint32_t color);
@@ -132,23 +141,25 @@ int				ft_parsemap(t_data **data, char **argv);
 
 // clear
 void			ft_cleardata(t_data *data);
+void			ft_clear_images(t_imgs *imgs, void *mlx_ptr);
+void			ft_clear_mlx(t_data *data);
 void			ft_clrptr(void **ptr);
 
 // wireframe
 int				ft_wire(t_data **data);
 
 // transformation
-void			ft_scale(t_wire **wire, float fac, float pad);
+void			ft_autoscale(t_wire **wire, float fac, float pad);
 void			ft_translate(t_point *point, float x, float y);
-void			ft_rotate(t_wire **a, float w, void (*f)(t_point *, float));
+void			ft_rotate(t_wire **a, float r, void (*f)(t_point *, float));
 void			ft_setorigin(t_wire **wire);
 void			ft_setdefault(t_wire **wire);
 
 // rotation matrices
-void			ft_project_isometric(t_point *point, float rad);
-void			ft_rotate_x(t_point *point, float rad);
-void			ft_rotate_y(t_point *point, float rad);
-void			ft_rotate_z(t_point *point, float rad);
+void			ft_project_isometric(t_data data, t_point *point, float rad);
+void			ft_rotate_x(t_data data, t_point *point, float rad);
+void			ft_rotate_y(t_data data, t_point *point, float rad);
+void			ft_rotate_z(t_data data, t_point *point, float rad);
 
 // mouse
 void			ft_zoom_out(t_data **data, t_wire **wire);
@@ -157,8 +168,13 @@ void			ft_zoom_in(t_data **data, t_wire **wire);
 void			ft_transform_points(t_wire **wire);
 void			ft_connect_points(t_data *data, t_img **buffer);
 
-void			ft_avg_width(t_wire **wire);
-void			ft_avg_height(t_wire **wire);
+// positioning
+void			ft_middle(t_wire **wire);
+void			ft_avg_width(t_wire **wire, float val);
+void			ft_avg_height(t_wire **wire, float val);
+
+// resizing wnd
+int    			ft_wnd_resize(t_data *data, int size);
 
 // event handling bonus
 void			ft_instructions(void *ptr, void *win);
