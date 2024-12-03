@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:44:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/03 17:11:22 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/12/03 17:39:20 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	ft_set_line(t_line_vars *line, t_point *p1, t_point *p2, int *len)
 	line->dx = p2->x - p1->x;
 	line->dy = p2->y - p1->y;
 	line->len = sqrtf(powf(line->dx, 2) + powf(line->dy, 2));
+	if (!line->len)
+		line->len = 1;
 	*len = line->len;
-	if (!*len)
-		return ;
 	line->sx = line->dx / line->len;
 	line->sy = line->dy / line->len;
 }
