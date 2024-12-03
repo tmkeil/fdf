@@ -61,7 +61,6 @@ clean:
 	rm -rf $(OBJSDIR)
 	$(MAKE) -C $(LIBFTDIR) clean
 	$(MAKE) -C $(MINILIBXDIR) clean
-	$(MAKE) -C $(MINILIBXLINUXDIR) clean
 
 fclean: clean
 	rm -rf $(NAME)
