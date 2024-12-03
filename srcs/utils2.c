@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:44:27 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/02 18:50:54 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/12/03 17:11:22 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	ft_map_height(char *filename)
 		if (!line)
 			break ;
 		height++;
+		free(line);
 	}
 	return (free(line), close(fd), height);
 }

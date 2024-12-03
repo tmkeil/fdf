@@ -16,11 +16,11 @@ endif
 MINILIBXDIR = mlx
 MINILIBXLINUXDIR = linux
 
-LIBFTDIR = libft/
+LIBFTDIR = libft
 LIBFT = $(LIBFTDIR)/libft.a
-HEADERSDIR = headers/
-SRCSDIR = srcs/
-OBJSDIR = objs/
+HEADERSDIR = headers
+SRCSDIR = srcs
+OBJSDIR = objs
 
 SRCS = main.c utils.c utils2.c clear.c clear_images.c init.c parse.c numbers.c wireframe.c transformations.c rotation_matrices.c positioning.c window_resize.c
 

@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:45:54 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/02 19:50:15 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/12/03 17:33:14 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,6 @@ int	main(int argc, char *argv[])
 	mlx_hook(data->var->mlx_win, 6, 1L << 6, mousemove, data);
 	ft_instructions(data->var->mlx_ptr, data->var->mlx_win);
 	mlx_loop(data->var->mlx_ptr);
-	return (ft_cleardata(data), 0);
+	ft_cleardata(data);
+	return (0);
 }

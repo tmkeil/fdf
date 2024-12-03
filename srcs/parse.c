@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:45:38 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/02 14:45:43 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/12/03 17:14:02 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static int	ft_map_matrix(t_wire **wire, char *line, int i)
 	char	**split2;
 
 	split = ft_split(line, ' ');
+	(*wire)->widths[i] = ft_wordcount(line);
 	(*wire)->transformed[i] = malloc(sizeof(t_point) * (*wire)->widths[i]);
 	if (!split || !(*wire)->transformed[i])
 		return (ft_clrptr((void **)split), 0);
@@ -87,12 +88,12 @@ static int	ft_set_map(t_wire *wire, int fd, char *filename)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		wire->widths[i] = ft_wordcount(line);
 		if (!ft_map_matrix(&wire, line, i++))
 			return (free(line), 0);
+		free(line);
 	}
 	ft_set_max_width(wire);
-	return (free(line), 1);
+	return (1);
 }
 
 int	ft_parsemap(t_data **data, char **argv)
