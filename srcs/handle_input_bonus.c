@@ -6,7 +6,7 @@
 /*   By: tkeil <tkeil@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 14:46:03 by tkeil             #+#    #+#             */
-/*   Updated: 2024/12/02 19:49:33 by tkeil            ###   ########.fr       */
+/*   Updated: 2024/12/03 12:41:06 by tkeil            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	keydown(int key, void *param)
 {
 	t_data	*data;
 
-	printf("key = %i\n", key);
 	data = (t_data *)param;
 	if (key == CTRL)
 		data->mouse.ctrl_down = true;
@@ -94,20 +93,3 @@ int	keydown(int key, void *param)
 		ft_rot_bonus(data, key);
 	return (0);
 }
-
-// int	keydown(int key, void *param)
-// {
-// 	t_data	*data;
-
-// 	printf("key = %i\n", key);
-// 	data = (t_data *)param;
-// 	if (key == CTRL)
-// 		data->mouse.ctrl_down = true;
-// 	if (key == W || key == S || key == A || key == D)
-// 		ft_rot_bonus(data, key);
-// 	if (data->mouse.ctrl_down && key == P)
-// 		ft_z(data, &data->wirefr, 0);
-// 	else if (data->mouse.ctrl_down && key == M)
-// 		ft_z(data, &data->wirefr, 1);
-// 	return (0);
-// }

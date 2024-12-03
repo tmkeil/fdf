@@ -2,13 +2,13 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME = fdf
 
-UNAME := $(shell uname)
+UNAME = $(shell uname)
 ifeq ($(UNAME), Linux)
-	INCLUDES = -I/usr/include -I$(LIBFTHEADERS) -I$(MINILIBXLINUXDIR) -I$(HEADERSDIR)
+	INCLUDES = -I/usr/include -I$(MINILIBXLINUXDIR) -I$(HEADERSDIR)
 	LIBS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L$(LIBFTDIR) -lft -L$(MINILIBXLINUXDIR) -lmlx_Linux -L/usr/lib/x86_64-linux-gnu -lXext -lX11 -lm -lbsd
 	MINILIBX = $(MINILIBXLINUXDIR)/libmlx_Linux.a
 else
-    INCLUDES = -I/usr/local/include -I$(LIBFTHEADERS) -I$(MINILIBXDIR) -I$(HEADERSDIR)
+    INCLUDES = -I/usr/local/include -I$(MINILIBXDIR) -I$(HEADERSDIR)
     LIBS = -L/usr/local/lib/ -framework OpenGL -framework AppKit -L$(LIBFTDIR) -lft -L$(MINILIBXDIR) -lmlx
 	MINILIBX = $(MINILIBXDIR)/libmlx.a
 endif
@@ -16,27 +16,25 @@ endif
 MINILIBXDIR = mlx
 MINILIBXLINUXDIR = linux
 
-LIBFTDIR = libft
+LIBFTDIR = libft/
 LIBFT = $(LIBFTDIR)/libft.a
-LIBFTHEADERS = $(LIBFTDIR)/headers
-HEADERSDIR = headers
-SRCSDIR = srcs
-OBJSDIR = objs
+HEADERSDIR = headers/
+SRCSDIR = srcs/
+OBJSDIR = objs/
 
 SRCS = main.c utils.c utils2.c clear.c clear_images.c init.c parse.c numbers.c wireframe.c transformations.c rotation_matrices.c positioning.c window_resize.c
 
 SRCS_BONUS = main_bonus.c handle_input_bonus.c transformations_bonus.c utils_bonus.c window_resize_bonus.c transformations.c rotation_matrices.c \
 				wireframe.c utils.c utils2.c clear.c clear_images.c init.c parse.c numbers.c positioning.c
 
-SRCSS = $(addprefix $(SRCSDIR)/, $(SRCS))
-SRCSS_BONUS = $(addprefix $(SRCSDIR)/, $(SRCS_BONUS))
+SRCS_PATHS = $(addprefix $(SRCSDIR)/, $(SRCS))
+SRCS_PATHS_BONUS = $(addprefix $(SRCSDIR)/, $(SRCS_BONUS))
 OBJS = $(addprefix $(OBJSDIR)/, $(SRCS:.c=.o))
 OBJS_BONUS = $(addprefix $(OBJSDIR)/, $(SRCS_BONUS:.c=.o))
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(MINILIBX) $(OBJS)
-	@echo "\n\n\n\n\ncreate\n\n\n\n\n\n\n\n"
 	$(CC) $(CFLAGS) $(OBJS) $(LIBS) $(INCLUDES) -o $(NAME)
 
 bonus: $(LIBFT) $(MINILIBX) $(OBJS_BONUS)
@@ -50,14 +48,14 @@ else
 	$(MAKE) -C $(MINILIBXDIR)
 endif
 
+$(OBJSDIR)/%.o: $(SRCSDIR)/%.c | $(OBJSDIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
 $(LIBFT):
 	$(MAKE) -C $(LIBFTDIR)
 
 $(OBJSDIR):
 	mkdir -p $(OBJSDIR)
-
-$(OBJSDIR)/%.o: $(SRCSDIR)/%.c | $(OBJSDIR)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	rm -rf $(OBJSDIR)
